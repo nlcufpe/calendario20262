@@ -5,161 +5,368 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NLC UFPE – Calendário 2026.2</title>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Segoe UI',system-ui,sans-serif;background:#eef0ee;color:#1a1a1a;min-height:100vh}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  header{background:#fff;border-bottom:1px solid #e4e4e4;padding:1.4rem 2rem;display:flex;flex-direction:column;align-items:center;gap:.5rem}
-  .logo-img{height:56px;width:auto;display:block}
-  .logo-fallback{display:none;flex-direction:column;align-items:center;gap:.1rem}
-  .logo-fallback-text{font-size:1.9rem;font-weight:900;color:#f7941d;letter-spacing:-1px;line-height:1}
-  .logo-fallback-sub{font-size:.55rem;font-weight:700;letter-spacing:1.5px;color:#aaa;text-transform:uppercase}
-  .header-name{color:#aaa;font-size:.68rem;font-weight:600;letter-spacing:.8px;text-transform:uppercase;text-align:center}
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #eef0ee; color: #1a1a1a; min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
 
-  main{max-width:860px;margin:0 auto;padding:2.4rem 1.2rem 3rem}
+  /* ── HEADER ── */
+  header {
+    background: #fff; border-bottom: 1px solid #e4e4e4;
+    padding: 1.25rem 2rem;
+    display: flex; flex-direction: column; align-items: center; gap: .5rem;
+  }
+  .logo-wrap { height: 60px; display: flex; align-items: center; justify-content: center; }
+  .logo-img { height: 60px; width: auto; object-fit: contain; display: block; }
+  .header-name {
+    color: #b0b0b0; font-size: .68rem; font-weight: 600;
+    letter-spacing: .9px; text-transform: uppercase; text-align: center;
+  }
 
-  .home-intro{text-align:center;margin-bottom:2rem}
-  .home-intro h2{font-size:1.3rem;font-weight:800;color:#1a1a1a;margin-bottom:.35rem}
-  .home-intro p{font-size:.85rem;color:#bbb;font-weight:400}
+  /* ── MAIN ── */
+  main { max-width: 860px; margin: 0 auto; padding: 2.5rem 1.25rem 3rem; }
 
-  .section-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
-  @media(max-width:700px){.section-grid{grid-template-columns:repeat(2,1fr);gap:.75rem}}
+  /* ── INTRO ── */
+  .home-intro { text-align: center; margin-bottom: 2rem; }
+  .home-intro h2 { font-size: 1.3rem; font-weight: 800; color: #1a1a1a; margin-bottom: .35rem; }
+  .home-intro p { font-size: .85rem; color: #aaa; }
 
-  .section-card{background:#fff;border-radius:16px;overflow:hidden;cursor:pointer;transition:box-shadow .2s,transform .18s;box-shadow:0 1px 4px rgba(0,0,0,.07)}
-  .section-card:hover{box-shadow:0 8px 24px rgba(0,0,0,.11);transform:translateY(-3px)}
-  .section-accent{height:6px;width:100%}
-  .section-card-body{padding:1.1rem 1rem 1rem;display:flex;flex-direction:column;gap:.3rem}
-  .section-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.3rem}
-  .section-name{font-size:.92rem;font-weight:700;color:#1a1a1a;line-height:1.3}
-  .section-arrow{color:#ddd;font-size:1rem;flex-shrink:0;margin-top:.05rem;transition:color .2s,transform .2s}
-  .section-card:hover .section-arrow{color:#f7941d;transform:translateX(3px)}
-  .section-sub{font-size:.68rem;color:#bbb;line-height:1.4;margin-top:.1rem}
+  /* ── GRID ── */
+  .sec-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem; margin-bottom: 1rem;
+  }
+  @media (max-width: 520px) { .sec-grid { grid-template-columns: 1fr; } }
 
-  #detail{display:none}
-  .back-btn{background:#fff;border:1.5px solid #e4e4e4;color:#555;font-size:.82rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;margin-bottom:1.8rem;padding:.55rem 1rem;border-radius:10px;transition:border-color .2s,color .2s;box-shadow:0 1px 3px rgba(0,0,0,.05)}
-  .back-btn:hover{border-color:#f7941d;color:#f7941d}
-  .detail-title{font-size:1.35rem;font-weight:800;color:#1a1a1a;margin-bottom:1.4rem;line-height:1.25}
+  /* ── CARDS ── */
+  .sec-card {
+    background: #fff; border-radius: 16px; overflow: hidden;
+    cursor: pointer; transition: box-shadow .2s, transform .18s;
+    box-shadow: 0 1px 4px rgba(0,0,0,.07);
+    display: flex; flex-direction: column;
+    min-height: 120px;                      /* altura mínima uniforme */
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+  .sec-card:hover  { box-shadow: 0 8px 28px rgba(0,0,0,.11); transform: translateY(-3px); }
+  .sec-card:active { transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,.08); }
+  .sec-card:focus-visible { outline: 2.5px solid #f7941d; outline-offset: 2px; }
 
-  .event-block{background:#fff;border-radius:14px;padding:1rem 1.2rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05);display:flex;align-items:center;gap:1rem}
-  .event-block.hl{border-left:3px solid var(--ac)}
-  .event-date-col{display:flex;flex-direction:column;align-items:center;min-width:50px;flex-shrink:0}
-  .event-day{font-size:1.5rem;font-weight:900;line-height:1;color:var(--ac)}
-  .event-month{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#aaa;margin-top:.1rem}
-  .event-wd{font-size:.6rem;color:#ccc;margin-top:.08rem}
-  .event-divider{width:2px;align-self:stretch;min-height:36px;border-radius:2px;flex-shrink:0;background:var(--ac-pale)}
-  .event-info{flex:1}
-  .event-label{font-size:.88rem;font-weight:600;color:#1a1a1a;line-height:1.4}
-  .event-label.hl{color:var(--ac)}
+  .sec-accent { height: 7px; width: 100%; flex-shrink: 0; }
+  .sec-card-body {
+    padding: 1.2rem 1.1rem 1.1rem;
+    display: flex; flex-direction: column;
+    justify-content: space-between; flex: 1; gap: .5rem;
+  }
+  .sec-card-top {
+    display: flex; align-items: flex-start;
+    justify-content: space-between; gap: .5rem;
+  }
+  .sec-name { font-size: .97rem; font-weight: 700; color: #1a1a1a; line-height: 1.3; flex: 1; }
+  .sec-arrow {
+    color: #d8d8d8; font-size: 1.2rem; line-height: 1;
+    flex-shrink: 0; margin-top: .05rem;
+    transition: color .2s, transform .2s;
+  }
+  .sec-card:hover .sec-arrow { color: #f7941d; transform: translateX(3px); }
 
-  .range-col{display:flex;flex-direction:column;align-items:center;min-width:50px;flex-shrink:0;gap:.1rem}
-  .range-dates{font-size:.62rem;font-weight:800;color:var(--ac);text-align:center;line-height:1.5}
-  .range-sub{font-size:.54rem;color:#ccc;text-transform:uppercase;letter-spacing:.4px}
+  /* datas nos cards — consistência visual */
+  .sec-dates {
+    display: flex; align-items: center; gap: .4rem;
+    flex-wrap: wrap;
+  }
+  .sec-date-chip {
+    font-size: .7rem; font-weight: 600;
+    padding: .22rem .65rem; border-radius: 20px;
+    background: #f4f4f4; color: #666; white-space: nowrap;
+  }
+  .sec-sub { font-size: .72rem; color: #bbb; line-height: 1.45; margin-top: .1rem; }
 
-  .callout{border-radius:14px;padding:1rem 1.2rem;margin-bottom:.65rem;display:flex;gap:.8rem;align-items:flex-start}
-  .callout-icon{font-size:1.15rem;flex-shrink:0;line-height:1.4}
-  .callout-text{font-size:.82rem;color:#555;line-height:1.6}
-  .callout-text strong{color:#1a1a1a;display:block;margin-bottom:.15rem;font-size:.86rem}
+  /* ── DETALHE ── */
+  #detail { display: none; }
 
-  .sched-block{background:#fff;border-radius:14px;padding:1.1rem 1.2rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05)}
-  .sched-badge{font-size:.68rem;font-weight:800;padding:.25rem .65rem;border-radius:20px;display:inline-block;margin-bottom:.85rem}
-  .sched-table{border-radius:10px;overflow:hidden;border:1px solid #f0f0f0}
-  .sched-row{display:flex;align-items:center;padding:.6rem 1rem;gap:1rem;border-bottom:1px solid #f5f5f5}
-  .sched-row:last-child{border-bottom:none}
-  .sched-time{font-size:.8rem;font-weight:700;color:#1a1a1a;min-width:130px;flex-shrink:0}
-  .sched-lang{font-size:.8rem;color:#444;font-weight:500}
-  @media(max-width:400px){.sched-time{min-width:95px;font-size:.73rem}.sched-lang{font-size:.73rem}}
+  .back-btn {
+    background: #fff; border: 1.5px solid #e4e4e4; color: #555;
+    font-size: .83rem; font-weight: 600; cursor: pointer;
+    display: inline-flex; align-items: center; gap: .45rem;
+    margin-bottom: 1.8rem; padding: .6rem 1.1rem;
+    border-radius: 10px; transition: border-color .2s, color .2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,.05);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .back-btn svg { flex-shrink: 0; pointer-events: none; }
+  .back-btn:hover { border-color: #f7941d; color: #f7941d; }
+  .back-btn:focus-visible { outline: 2px solid #f7941d; outline-offset: 2px; }
 
-  .cta-bar{background:#fff;border-radius:14px;padding:1.2rem 1.4rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:1.8rem;box-shadow:0 1px 4px rgba(0,0,0,.05)}
-  .cta-bar p{font-size:.84rem;color:#777;line-height:1.6}
-  .cta-bar strong{color:#1a1a1a;display:block;font-size:.9rem;margin-bottom:.1rem}
-  .cta-link{background:#f7941d;color:#fff;font-weight:700;font-size:.88rem;padding:.7rem 1.4rem;border-radius:10px;text-decoration:none;white-space:nowrap;transition:background .2s;box-shadow:0 2px 8px rgba(247,148,29,.3);flex-shrink:0}
-  .cta-link:hover{background:#e07f0a}
+  .detail-header { margin-bottom: 1.6rem; }
+  .detail-eyebrow {
+    font-size: .68rem; font-weight: 700; letter-spacing: .8px;
+    text-transform: uppercase; color: #f7941d; margin-bottom: .35rem;
+  }
+  .detail-title { font-size: 1.4rem; font-weight: 800; color: #1a1a1a; line-height: 1.2; margin-bottom: .3rem; }
+  .detail-sub { font-size: .84rem; color: #aaa; }
 
-  footer{text-align:center;padding:2rem 1rem;border-top:1px solid #e4e4e4;margin-top:1rem;background:#fff}
-  .insta-btn{display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;font-weight:700;font-size:.9rem;padding:.75rem 1.6rem;border-radius:10px;margin-bottom:.8rem;box-shadow:0 3px 12px rgba(220,39,67,.22);transition:opacity .2s}
-  .insta-btn:hover{opacity:.88}
-  .footer-copy{font-size:.7rem;color:#ccc}
+  /* ── BLOCOS ── */
+  .content-block {
+    background: #fff; border-radius: 16px;
+    padding: 1.4rem; margin-bottom: 1rem;
+    box-shadow: 0 1px 5px rgba(0,0,0,.06);
+  }
+  /* Título interno do bloco */
+  .block-title {
+    font-size: .72rem; font-weight: 700; letter-spacing: .6px;
+    text-transform: uppercase; color: #bbb;
+    margin-bottom: 1rem; padding-bottom: .6rem;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  /* Data-destaque do bloco (ex: "16/09/2026 · quarta-feira") */
+  .block-date-tag {
+    display: inline-flex; align-items: center; gap: .4rem;
+    font-size: .75rem; font-weight: 700;
+    padding: .25rem .75rem; border-radius: 20px;
+    margin-bottom: .85rem;
+  }
 
-  .fade{animation:fi .22s ease}
-  @keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  /* ── INFO BOX ── */
+  .info-box {
+    background: #fffbf5; border: 1.5px solid #fde8c8;
+    border-radius: 12px; padding: .9rem 1.1rem; margin-bottom: 1.2rem;
+    display: flex; align-items: flex-start; gap: .6rem;
+  }
+  .info-box-icon { flex-shrink: 0; margin-top: .15rem; color: #d4820a; }
+  .info-box p { font-size: .81rem; color: #8a5800; line-height: 1.65; }
+
+  /* ── LINK BOX (nivelamento) ── */
+  .link-box {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem; flex-wrap: wrap;
+    background: #f9f9f9; border-radius: 12px;
+    padding: .9rem 1.1rem; margin-bottom: 1.2rem;
+  }
+  .link-box p { font-size: .82rem; color: #555; line-height: 1.5; }
+  .link-box strong { color: #1a1a1a; display: block; margin-bottom: .1rem; font-size: .86rem; }
+  .link-box a {
+    font-size: .82rem; font-weight: 700; color: #f7941d;
+    text-decoration: none; white-space: nowrap;
+    padding: .5rem 1rem; border-radius: 8px;
+    background: #fff3e0; border: 1.5px solid #fde5b8;
+    transition: background .18s;
+  }
+  .link-box a:hover { background: #fde8c4; }
+
+  /* ── TABELA DE DATAS ── */
+  .datas-table { width: 100%; border-collapse: collapse; }
+  .datas-table tr { border-bottom: 1px solid #f2f2f2; }
+  .datas-table tr:last-child { border-bottom: none; }
+  .datas-table td { padding: .78rem .4rem; font-size: .84rem; line-height: 1.45; vertical-align: middle; }
+  .td-data {
+    font-weight: 700; color: #1a1a1a;
+    width: 38%;                   /* proporcional, não min-width fixo */
+    padding-right: .75rem;
+  }
+  .td-dia { font-size: .69rem; color: #bbb; font-weight: 400; display: block; margin-top: .08rem; }
+  .td-evento { color: #444; }
+
+  /* linha destacada = data principal (início/fim) */
+  .row-marco { background: #f8fff4; }
+  .row-marco .td-data { color: #3d8a00; }
+  .row-marco .td-evento { color: #2d6600; font-weight: 600; }
+
+  /* ── TABELA NIVELAMENTO ── */
+  .nivel-table { width: 100%; border-collapse: collapse; }
+  .nivel-table th {
+    font-size: .7rem; font-weight: 700; letter-spacing: .5px;
+    text-transform: uppercase; color: #aaa;
+    padding: 0 .4rem .6rem; text-align: left;
+    border-bottom: 2px solid #f0f0f0;
+  }
+  .nivel-table td {
+    padding: .6rem .4rem; font-size: .84rem;
+    border-bottom: 1px solid #f5f5f5; vertical-align: middle;
+  }
+  .nivel-table tr:last-child td { border-bottom: none; }
+  .nivel-table .col-prova { font-weight: 700; color: #1a1a1a; }
+  .nivel-table .col-result { color: #555; }
+
+  /* ── HORÁRIOS ── */
+  .horario-row {
+    display: flex; align-items: center; gap: .75rem;
+    padding: .62rem 0; border-bottom: 1px solid #f5f5f5; font-size: .84rem;
+  }
+  .horario-row:last-child { border-bottom: none; }
+  .horario-hora { font-weight: 700; color: #1a1a1a; flex: 0 0 130px; }
+  .horario-idioma { color: #555; flex: 1; }
+  .horario-badge {
+    font-size: .67rem; font-weight: 700; padding: .2rem .6rem;
+    border-radius: 20px; white-space: nowrap; flex-shrink: 0;
+  }
+  .badge-online     { background: #e0f7f4; color: #0a8a7a; }
+  .badge-presencial { background: #fff3e0; color: #d4720a; }
+
+  /* ── CTA BAR ── */
+  .cta-bar {
+    background: #fff; border-radius: 16px;
+    padding: 1.3rem 1.5rem;
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 1rem;
+    flex-wrap: wrap; margin-top: 2rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,.05);
+  }
+  .cta-bar p { font-size: .87rem; color: #777; line-height: 1.55; }
+  .cta-bar strong { color: #1a1a1a; display: block; font-size: .93rem; margin-bottom: .1rem; }
+  .cta-link {
+    background: #f7941d; color: #fff;
+    font-weight: 700; font-size: .88rem;
+    padding: .72rem 1.4rem; border-radius: 10px;
+    text-decoration: none; white-space: nowrap;
+    transition: background .2s;
+    box-shadow: 0 2px 8px rgba(247,148,29,.3);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .cta-link:hover { background: #e07f0a; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center; padding: 2rem 1rem;
+    border-top: 1px solid #e8e8e8; margin-top: 2rem; background: #fff;
+  }
+  .insta-btn {
+    display: inline-flex; align-items: center; gap: .55rem;
+    text-decoration: none;
+    background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
+    color: #fff; font-weight: 700; font-size: .9rem;
+    padding: .78rem 1.7rem; border-radius: 10px; margin-bottom: .85rem;
+    box-shadow: 0 3px 12px rgba(220,39,67,.22);
+    transition: opacity .2s; -webkit-tap-highlight-color: transparent;
+  }
+  .insta-btn svg { flex-shrink: 0; pointer-events: none; }
+  .insta-btn:hover { opacity: .88; }
+  .footer-copy { font-size: .7rem; color: #ccc; }
+
+  /* ── ANIMAÇÃO ── */
+  .fade { animation: fadeIn .22s ease both; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 </style>
 </head>
 <body>
 
 <header>
-  <img
-    src="./logo.png"
-    class="logo-img"
-    alt="NLC – fale com o mundo"
-    onerror="this.style.display='none';document.querySelector('.logo-fallback').style.display='flex'"
-  >
-  <div class="logo-fallback">
-    <div class="logo-fallback-text">NLC</div>
-    <div class="logo-fallback-sub">fale com o mundo</div>
+  <div class="logo-wrap">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARgAAABWCAYAAAAUq4kkAAABCGlDQ1BJQ0MgUHJvZmlsZQAAeJxjYGA8wQAELAYMDLl5JUVB7k4KEZFRCuwPGBiBEAwSk4sLGHADoKpv1yBqL+viUYcLcKakFicD6Q9ArFIEtBxopAiQLZIOYWuA2EkQtg2IXV5SUAJkB4DYRSFBzkB2CpCtkY7ETkJiJxcUgdT3ANk2uTmlyQh3M/Ck5oUGA2kOIJZhKGYIYnBncAL5H6IkfxEDg8VXBgbmCQixpJkMDNtbGRgkbiHEVBYwMPC3MDBsO48QQ4RJQWJRIliIBYiZ0tIYGD4tZ2DgjWRgEL7AwMAVDQsIHG5TALvNnSEfCNMZchhSgSKeDHkMyQx6QJYRgwGDIYMZAKbWPz9HbOBQAAAWpElEQVR42u3daXNdx53f8W93n+1uuBcAARAESIoiKYoStVr2yJa3ZGLH40qsqSnPJE6lkszTVN5H3kGqUpnKVCqZOJMHztgp2zOx6ViOLWmsnbIWUqS4ASRAABd3PeeepfufBxeWLImuWHI0tKj+VKFYKALExeHt3/l3n16UiOB5nvdh0P4SeJ7nA8bzPB8wnud5PmA8z/MB43meDxjP8zwfMJ7n+YDxPM8HjOd5ng8Yz/N8wHie5wPG8zzPB4zneT5gPM/zAeN5nucDxvM8HzCe5/mA8TzP8wHjeZ4PGM/zfMB4nuf5gPE8zweM53k+YDzP83zAeJ7nA8bzPgjpCnR/+2NHq21Btj7k40t7/njUXyPwl8D7naT0B2vowx0YdCHNoNWEegiNWTAfYhYCyv+P+YDxPko677/Nbr9B/+d/yY1zz5CNU2b3H2Xx6GPEv/c41D7ELPwgr9UHjOd9hFQ7IuuvML74JK3ha7SKCdmVa2xZxeqpz0HtkL9Gt4Afg/FuD0WXzc2LFDtr7NMp++sFjeIaw80zcOMX/vr4CsbzPiC7KSSaIDAYJdi8IDDQrinKOqAzf418BeN5H7h/BJUwyi1VkFBoTV6BNQarHWQDkB3/pMdXMN7Hr/q4LmCBEFQIWnPTAV57XdAO1Iq66dvYBGgn0z+DmLzKsA5MEEGtBuL+H496eoI4EDt9LOQ0YCD0A7g+YLyPXq6Uu2KCFMpNyEeQzEBloD4HykmZC2E8r6jWhfENCEeQp9DqCrYOtgX1xWnjN0uK7HWZD4RBVYGFONEMicjKvcC4Wa2e3xDiEqo+FGNQFpyFSkA0xK29+Tg1iJZ90PiA8T4qTFhBtsnklScYrF+gtz3g8IkHiY8+CIsHCQPg+kvS/cWTjLYv0O9fJ0pinGmQtA+y/46HqB1+UGjfrSh3BSmJbYlxFuUEdDCtQGSvErHV23Nhsq4QZpBdY+flZ8h6l8m21pDJCF1aNAacIqi1WbrjJPHRh2C+L9QWgbnfOGh29n66nnbiUMDcx2zKjA8Y7xYNm4wYX3iJKy+eptx6k4YJuPDT1zk63iH+7Bfh3IusP/sDRldepJU4ZgWSZouNnQHDcAZZf57GxQdYeugPhYVVcDkKh3EObQWtQOm9cEGD0WRFX2qmBLMLF55l86Uf0l97jrrr0XY5ZTokUBGNehONYXCj4vqVpyhfWGb5wS/RPP4oLN4rhO+tZrZBRkAOuL1AqfZ+egAMcWgUl1GiAIVgUDSBGFi+TYPHB4x3a5QjdtfOU269yZzbJRILo4rJxRlitcv2y08RpNe4oz4iIGc8cdTKnDDKsaYg647Y2rhEUgrtz30NajEWg4iAqt6eCSzRNGDSIbV6ANlVqjM/4I0nv000uMyhekHW3SIKQSnAZTAcoQVaChpBRJqlrP08ZabX5cAn67Cy/J5f5wZwrszY3NgiLXOsg6wqyIsCgHqriXMOKgu2wihNLYmYa3dYrLeokprMAO3bLGh8wHi3qI8UkBQZbTehLWNcNabRqlFu/oJs9yL1KiXQFZNxRqnAaE3WHxGFoCmp64xYUrj8Ezi4BHd/gVzVKQ04ZzHKosWhXAg2mjZbu8346f/KxgvfoTNeY0ZSkqpGqEFFCQUaKwniFFo7Yl1SVSOCdEwrdIwuPAeHHoL5I0LydhVznkye2h3wxnDMYDCCwBAmNSSqY+s10IobZYkoMMaggwCNQlvH2nDE7HAEC0scrzcoQEKgc5sEjQ8Y79a9+Yqchi2I3RidOIpqTIjDFo5K1RlWNaS2jzBS1E1JMdgkYEyRQhhZ2rFQpmtw6Xm4+1FyLQgaLaBFo0RjxIJLwYyoXn2Oa8/9NfvKdWbjnKwLkzKnDNpUwTwpEU639yqsIarq0goqmvUQNykYjHZw4xG6cgD0QbYpeH5zk4uZY1cF2GYHlGIM5EWJ06CMxoR1cA4lEGiDEYdUFikrsrJEXXoTOXiIE602LV/BeN5vOwYDVZqSOEtgHcPh9NbdaEVsjgzh0oPM3vkposMnKbfXGV99ijJ4Gdu/SJxkOJ1Q2YCKgt611zmge4hKAY12dYwKCIjQpMAW9F5l49UfsciQelEwHFmCRoO0sUzROkTrjkeYPXQ/HLgLqgK5/Aob55+kt/kMOtsGEzO3sIJeWAHTBGAXeLFbcGYr5YYElHGIiWLQGoUiSqaVmtIaay1WLEosThRaBLQQaCEIKrZ6G7yxvUGtVuNoENEHuR26Sz5gvFvXS9IQRcAYWi3FoISt1KHm72Dpj/4NtE6AbhDekdF5+BPwzLe4/pO/oCYOpQx5llFr1clkAlKAVCgq0AarQiwaIznYXbj8EuOrr9Ca7FJMSuqNGmm8yIYsc88/+FM49AnQHaAOZY568A6W73sEe+YHvPy3P6KVNDl472fhjlOQtFUXZABcSgt6YZ0gngGlKSSnrCYoDDow2MLiKiHQhroUxEyIKVDkuLIgtJoaJc1kQtXfZBBnuAPHadPwXSTP+8AU2FCRktGMwFZCbmtk4SJHv/KnUD8CycFpI6t6ghyEk1+m9vyPMLtdVJkyk0BZFGjTht2cxMVMtKUwKYU2FIQkQQlZHy5tUBv3cDFUrZBhLqSqyZHP/BM4/PeABgR7k+p+2SrMCua+FXnw1D8HLVACyepbDX80hu54SB7GFBVUpsKFE7SxhBa0BYPG6IB4UtJWKUtmg4bpoukTmYqGi4gRNBnOTJgZbtGxAma/UNXefk0+YDzv/QSMxioFSlEpUBKgVR2ieUgWoDb/K+/SjiLoQL4tTrdQhECOEqYfVsBqAgdIiShLFTgqKQklh3JEuXmZhZqhn06II0MQJ8TtOWonPwnhyq9vxPHS238XvSMfQcFEOfIANAGKkul6BIdog3JC5ErqdsCSnrDf9FiJNumEOwTBiMCWNMo6xmlyOyaaiZAqxe4KRbJMFK+CQ9Af3ZDxAePdqg4SlgSoITIAW8OoBmHQhLjBTRtVXKOMW5SmOV01oCzWKcRFoDSBsxiZNn6tc5SrcKLAjimzHSKtiAtNpCNMYEg6bWjXmZQ9Sd7nkoBZUJVMpJAKh8MEJaay4AKUCigwOCraLmVBtrm/eZkVrjJvxiRmjJgMlBC4BtpE5IElSmLKSU4+voGbXKHV3CTuFOAWBH1Q+YDxvPdRwQghIvF0dLcSdAChVnvT+rvynlmzKgQdU6kIowwGxbQIUqBLlLaIUxgHgVgqEZQIOEsYw3C3Sy2KEauw4kiSCET4TcLFVT3R7+quKCoCLIoKJyUiilACEEOlFUoyZsyAVbPN8XidxfIytWqClCmlSkECAtdESZ1QR1TjEYGbEBuDUjnpYIIhJOhEQEPezyxiHzDex5toHAZNAGi0rgj0BEMOkoOU732G4qaPnpVoEIuiRGlBdAYmozLl9N9yAVFlsBIiqgbEVJEw0RPiIMFVDicC1oJzv9HL1TcZC2nEEQu1mKEtycSgiEhciFKKUioiGbIQrnE43GRftku7zEEsooVQKzRu+hqUg9JQ2AodWYJAYXXKoKiYjK7R7By7+fX4CPDbNXi3iEMjb7UZZRzOOCx7jf5m7d65aaBgUVKgsdMJu1pAOxwWlNkLIUAUTiUQNEklwjQ7TKrpEyiFkI96IJMPvJXDfBBxZKbOrK2IpUSJe2sOjrYQ24KW7jMXjImLFIppk1M6RusEVAw2gFxBKUQmIDAhFCmqzIiUxVYTqD66+9n4Csa7RRWMJXAVWipQFYVx5FrI1d7qHbnJvU8VaFWhdIlQIhoEjSOYrsSWcK84sjjlqLShjCKIZ4jm76S7foUGE5AS7Saku9eJLzwHR1ugrRAtvrdGqLpCOgKtIIwhfvtrDoMadDqS5ilnM8uuFDgBVEyAISIgEovBgqpNV2vrEqGYRqvT6KoOpQHjph+uQvICiRSBCqgqwCoIPpq1gK9gvL97VV+gwlCiKEGVlAI5igIzHWshfO/3mRxMgdMlSu0VHRKiXAAumA7waotTlgrBKk2pIwhnaK08QHcYECR1FBWqyqh611l/7jSMroIagf2V40dsT5hcEtZfhDd+zOjZ78LF5yG99o5q5xAxD8zNsd8pOs4hFFhVoHSFRqGqmLKKsGYaImLtdNKdc9MtZ+IIagGYCbg+uBRlBBPGiAqwEkBQ40M9FsFXMN7tVb0IVDniJijJUArEhGQ2YGITCNo3mf+xJTDAtAw2grQHSWDIMyFpN0AHmDzDuZQwgUmlCKIWXauhuR8WF9j/2iVG155kIRgR1yAxFWvrr/Hqt/4D93z9X0OSTveIiUIIxnDhGbae+g7ptQs4GzBYOs7yY3+COvl5IVpQMF2ceCyckeadbX56Y8Tz2SZ5TVGOJ6Aso3GdIuhQJptUakxQCgEWVE6pFHkIUahQ5V53LdAQ1CnyirQQ6jPzYOKPbC3gA8a7BcMvDoKAerPBJDAUk+kGUTNJHVWvQ55D2hfq7bdCRgAlFVuDLjOuZK6tCYKIWWp0JwVkBUEQYEJNVYEUglUVFQIpsLjK8snfY2N8ln5vi1mBqhrTjLsEo8uc+ea/ZXb1BHUzT5mlVMUOxdZZGruvcSB0FFXEbtexe/08c0cehGjhrV+ng1IVyNHZJq9XNxjlu6hJTiPSLLRW6bSbjPsXiSSkKSUYBTogUI5SwCpHUIugdIjT2DLBqnnCZJWwdgDowEf0aBQfMN7fPSvgYFxCWik6BobdlCLeIK7dNd1u4VfCBUBhIG4SmjrWCkXmkCwlSgpq9X1Qq+GSOhOnCCtoKU1oNVkcQ2NuOoHv+Kfg2tNkrss+PSFMJ9SqguHWaxAVBOmLTNI6ReGotQLawZhY7RLkUFiNRHNUxoF5b7PZB2pfiARZRlhlLEc17p6b5Z6ZBitmSFZdw+QBuE0oR2AVSsBIRKU11tQoq4rKhZhgDhOt0KjfiU6OAYf8RDvP+43V5xXjnuSmRao7dGJHp5GzNdY4rab74hY7QjT/Kw1rTlFcFRXO4oI5kpZg4pS80IyVoUaNHm0GtIiCEc0gJp04bCVQKGAG9rXZ/5mv0z3T4Pq5Z1GjNRYjodXQhGVJItsQNCkwjK2Ql2MQsAmk1Qyzx07RPH4KGodv2uAjhHo64VCjxX2Lq5xsznByOtlY6p2HYRxiJxNMVU3HmUwLo1soEzFRIHFAaGoY0yZJDkDtIETH/VIBz3vf4lnqSyfoXT7Eem9CKwwoTJ2Z2WUwEdP94N7dtZplceUTXN+4xpXtEbGyFCahc+ReWLyXdt6mt/4CO+tPUhRDdJTQWTkECyugZiBuKw59Rebig+yaVarWS+xsnEUP1pibm27LK+MRNmxiWw2yqE5a06j6PJ2VB2je/ftwx8MA9EA675qZ0iTleH2O9uwKJ5sRc29VX3MKEMuQsb5EEGnqwQrUViHahzYN6mpv5acJgBhUC/ScX03teR/snTen5o9/UoLsOpvnavSHfeZXj7N4/+9D58DenrrvkhxStfu/KkvjCWuvxRSSEe9fpvPYH0LQwhy4i85dn+dKmpEP11hYWmXh7s/B7GGI22p3N5fZ2QXF8heZ/cKcMHgM+/ITbJ7/OWvjNcKoYMa0sbrGNposTFg4cpTlY6cwy/fBzBFgum5J3eRA6hUa6v6FFenMRDR59+50c6qs2mLNCqa+CMnxacDECagEmL8tt8xUIv64GO8WGr4gbF4BswCtRdh3TAEURVei6NfcwfsXhPwGSEVVaxLMLE13rTMabAY7azDZhqQNs8chXLrJMSh9QWXTsqUcIv3r5FvbJLv5tNHPNmF2Bubm904XaIBa+u1CYLwmuV3D6JAgOATJghqxISWKWZZ8wHje/3f5uqAEotX318DKvoC849wi63pifrlIUrqC+i26GJOuEEwrrQ+Um2xIiCFhQb0j1EhBx/zyte0yEMExx+15/pKfaOfd4rGYFUW0ql577Rl54qm/ecfdbmB35cXzZ25+Bwzb6t2HoplfXYGtfsvxi2ROvd9w6advT9RrsV9ByNMv/x8Z/3ICn2krzLKa5G83u1lm1O0aLj5gvN8Jl69dlH/3X/49F7ffpMu67HJddtkUqwq++d//E91qS7ayTenb/k3DZncylG7RFYC13pV3fM1Otv2Oz7cGW++rZO8Op98/LHvvDD/3zs83xmvSrk+D4kZ1Tfpsy/Zkh58882NevvgSu2xKt9yUfr4tSfLxOS3SD/J6t9TOzo489+KzlGHF2fXX+Ivv9Ll06TIHDhzgD778B5RxxoUb53j91bNcuXKVdnNOvvEn32CefeqltRfl+9//a6oq59DRJeYXOnL27Fm63a489MDDrK6u8txzL9Dv96WqKg4ePMibb7zJQw89JF/+7FeYMOHpv32ap596CqzjkUce4Utf+Ifk5Hz7f/4PRIS1a1dZXFyU3nCAc04+/dijnDlzhn/19X/Bd579rnR7uxRFRaBizp07L48++iitdpMfPfEjdKAYj8dsp1s8/+3nGA9TVKX47Ge+II/e9dmPRcj4Csa7pebn59WhI4eIGyFf+dqX+PTnH+Ur//jLbOxscPpnpymY8IuzL/GLsy/x6Oc+xZtXz/Lqmy+xwZr89Nkn2Hegwx/9s8eJZwJ+/OQPOXryMN/4l3/M6Z/9L165cIbucJPHvvgpBtkO46LHifuP8frFV0jps5ve4AdPfI+v/fFX+do//Uc8feZJ3uyeQyOcXz9HbS5m9dgyL184w2N//1E2B9e5dP0CN0ab3GCT9d4a13vrPP/qs7T2tThy9xGefuFJ/ttffZOHP/0wX338q5Qq5/zaG6xvXeUzX/g0d5w4zP/+6Wm27LoM6IoPGM/7kC0tLaG1Jowi/uOf/xnd3W3iOCSOY4piwjgdEddDrq5f4uFPPkitGaOwWJuzb7HDcnuBU6fup6xgef9BkrjJoYN3MuinmDDmxJF7USbinlMPcOedx8nzihLH9c0bmDAiqTeIa3XiRpPd4YjNyQ7NmVmOn7yX/SuHCJI6iysrzC8uYTH0BymlBes01mlq9RmOHj3KgQMHGAwGWGtpNpus7lulXq9TVRXNZpOTB0+wsrJCXhY4hJm9DaQGVf+2DRrfRfJuuTzNMRLiMlhoLpF1c2KJmfRSFjpL3HX4OFfeuMp4d8y19Q0e//zj9Ks+x44c4/TfnObCuQuM05Qjy3fxw+/9hCiKUGXEncfu5vy5N9DEzNWXyHYrZpYahDQJpc59Rx7hmfkX+dZffpcgCJip7+Oeww9isQSuTpVCM5qjrls09RyJmqGdLDDpWb7/V6c5f/48p06dorcxRtuQxNQ4tHyEpJFw+nunebb9c25c2eKT932Kn/3kZ/zZf/5z+rtDThw7QdO8ffrRTNC+bbtL/jG19zvh0s556czPMB6NybKMRqNBFEXTykYHOIFLly5x9MhRrK2YMfsUQG+yKVvdHfbvP4ATYXNzC2sty0v7QSs6e6uyr+6sycH56aPw6/1NWW5P5530sp4MxiOUUtTqdfbVZhXAzqQn80lHbU+6UpQlB1pLarvYkSCKGA6HlGVJrVYDNT1A7UBzOgHv2mBN6s0aV9eusH9lPyJCK6iRS0k2nmBLYXX28MdmkNcHjOd9SAbFrsxEs2+FyXjSl0bSVh+na+ADxvO8D40f5PU8zweM53k+YDzP83zAeJ7nA8bzPB8wnud5PmA8z/MB43meDxjP8zwfMJ7n+YDxPM8HjOd5ng8Yz/N8wHie5wPG8zzPB4zneT5gPM/zAeN5nucDxvO83zH/F4N/Lfk617MGAAAAAElFTkSuQmCC" class="logo-img" alt="NLC UFPE – Fale com o mundo">
   </div>
   <div class="header-name">Núcleo de Línguas e Culturas — UFPE</div>
 </header>
 
 <main>
+  <!-- HOME -->
   <div id="home">
     <div class="home-intro">
       <h2>Calendário 2026.2</h2>
       <p>Selecione uma seção para ver as datas</p>
     </div>
 
-    <div class="section-grid">
-      <div class="section-card" onclick="show('nivelamento')">
-        <div class="section-accent" style="background:#4dc8c8"></div>
-        <div class="section-card-body">
-          <div class="section-card-top"><span class="section-name">Provas de Nivelamento</span><span class="section-arrow">›</span></div>
-          <div class="section-sub">Julho · On-line · Gratuito</div>
+    <div class="sec-grid">
+
+      <!-- Nivelamento -->
+      <div class="sec-card" onclick="showDetail('nivelamento')" role="button" tabindex="0" aria-label="Provas de Nivelamento">
+        <div class="sec-accent" style="background:#4dc8c8"></div>
+        <div class="sec-card-body">
+          <div class="sec-card-top">
+            <span class="sec-name">Provas de Nivelamento</span>
+            <span class="sec-arrow">›</span>
+          </div>
+          <div class="sec-dates">
+            <span class="sec-date-chip">29/06 – 27/07</span>
+            <span class="sec-date-chip">Toda segunda-feira</span>
+          </div>
         </div>
       </div>
-      <div class="section-card" onclick="show('intensivo')">
-        <div class="section-accent" style="background:#f7941d"></div>
-        <div class="section-card-body">
-          <div class="section-card-top"><span class="section-name">Curso Intensivo</span><span class="section-arrow">›</span></div>
-          <div class="section-sub">13/07 – 07/08</div>
+
+      <!-- Intensivo -->
+      <div class="sec-card" onclick="showDetail('intensivo')" role="button" tabindex="0" aria-label="Curso Intensivo">
+        <div class="sec-accent" style="background:#5aaa1e"></div>
+        <div class="sec-card-body">
+          <div class="sec-card-top">
+            <span class="sec-name">Curso Intensivo</span>
+            <span class="sec-arrow">›</span>
+          </div>
+          <div class="sec-dates">
+            <span class="sec-date-chip">13/07 – 07/08</span>
+          </div>
+          <div class="sec-sub">Matrículas: 15/06 a 08/07</div>
         </div>
       </div>
-      <div class="section-card" onclick="show('regular')">
-        <div class="section-accent" style="background:#5aaa1e"></div>
-        <div class="section-card-body">
-          <div class="section-card-top"><span class="section-name">Curso Regular</span><span class="section-arrow">›</span></div>
-          <div class="section-sub">19/08 – 12/12</div>
+
+      <!-- Regular -->
+      <div class="sec-card" onclick="showDetail('regular')" role="button" tabindex="0" aria-label="Curso Regular">
+        <div class="sec-accent" style="background:#f7941d"></div>
+        <div class="sec-card-body">
+          <div class="sec-card-top">
+            <span class="sec-name">Curso Regular</span>
+            <span class="sec-arrow">›</span>
+          </div>
+          <div class="sec-dates">
+            <span class="sec-date-chip">19/08 – 12/12</span>
+          </div>
+          <div class="sec-sub">Matrículas: 15/07 a 15/08</div>
         </div>
       </div>
-      <div class="section-card" onclick="show('proficiencia')">
-        <div class="section-accent" style="background:#dc2743"></div>
-        <div class="section-card-body">
-          <div class="section-card-top"><span class="section-name">ProfNLC B1</span><span class="section-arrow">›</span></div>
-          <div class="section-sub">Exame de Proficiência · Set/2026</div>
+
+      <!-- Proficiência B1 -->
+      <div class="sec-card" onclick="showDetail('proficiencia')" role="button" tabindex="0" aria-label="Exames de Proficiência ProfNLC B1">
+        <div class="sec-accent" style="background:#7b5ea7"></div>
+        <div class="sec-card-body">
+          <div class="sec-card-top">
+            <span class="sec-name">Exames de Proficiência – ProfNLC B1</span>
+            <span class="sec-arrow">›</span>
+          </div>
+          <div class="sec-dates">
+            <span class="sec-date-chip">Provas: 16–17/09</span>
+          </div>
+          <div class="sec-sub">Inscrições: 20/08 a 13/09</div>
         </div>
       </div>
+
     </div>
 
     <div class="cta-bar">
-      <p><strong>Mais informações e matrículas</strong>Acesse nosso Linktree para todos os detalhes.</p>
-      <a href="https://linktr.ee/nlcufpe" target="_blank" class="cta-link">linktr.ee/nlcufpe</a>
+      <p><strong>Dúvidas sobre o calendário?</strong>Atendimento seg. a sex. das 8h às 21h · sáb. das 8h às 12h.</p>
+      <a href="https://wa.me/message/OSXQDPCI4R6EK1" target="_blank" rel="noopener" class="cta-link">Falar no WhatsApp</a>
     </div>
   </div>
 
+  <!-- DETALHE -->
   <div id="detail">
-    <button class="back-btn" onclick="back()">&#8592; Voltar ao calendário</button>
-    <div id="d-title" class="detail-title"></div>
+    <button class="back-btn" onclick="goBack()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Voltar ao calendário
+    </button>
+    <div class="detail-header">
+      <div class="detail-eyebrow">Calendário NLC 2026.2</div>
+      <div id="d-title" class="detail-title"></div>
+      <div id="d-sub" class="detail-sub"></div>
+    </div>
     <div id="d-body"></div>
     <div class="cta-bar">
-      <p><strong>Mais informações e matrículas</strong>Acesse nosso Linktree para todos os detalhes.</p>
-      <a href="https://linktr.ee/nlcufpe" target="_blank" class="cta-link">linktr.ee/nlcufpe</a>
+      <p><strong>Dúvidas?</strong>Atendimento seg. a sex. das 8h às 21h · sáb. das 8h às 12h.</p>
+      <a href="https://wa.me/message/OSXQDPCI4R6EK1" target="_blank" rel="noopener" class="cta-link">Falar no WhatsApp</a>
     </div>
   </div>
 </main>
 
 <footer>
-  <a href="https://instagram.com/nlc.ufpe" target="_blank" class="insta-btn">
+  <a href="https://instagram.com/nlc.ufpe" target="_blank" rel="noopener" class="insta-btn">
     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
       <rect x="2" y="2" width="20" height="20" rx="5"/>
       <circle cx="12" cy="12" r="4"/>
-      <circle cx="17.5" cy="6.5" r="1.3" fill="currentColor" stroke="none"/>
+      <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
     </svg>
     Siga no Instagram
   </a>
@@ -167,136 +374,194 @@
 </footer>
 
 <script>
-function ev(day, month, wd, label, ac, highlight) {
-  return '<div class="event-block' + (highlight ? ' hl' : '') + '" style="--ac:' + ac + ';--ac-pale:' + ac + '28">' +
-    '<div class="event-date-col">' +
-      '<div class="event-day">' + day + '</div>' +
-      '<div class="event-month">' + month + '</div>' +
-      '<div class="event-wd">' + wd + '</div>' +
-    '</div>' +
-    '<div class="event-divider"></div>' +
-    '<div class="event-info">' +
-      '<div class="event-label' + (highlight ? ' hl' : '') + '">' + label + '</div>' +
-    '</div>' +
-  '</div>';
-}
+const ICON_INFO = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="pointer-events:none"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`;
 
-function evRange(d1, d2, label, ac) {
-  return '<div class="event-block" style="--ac:' + ac + ';--ac-pale:' + ac + '28">' +
-    '<div class="range-col">' +
-      '<div class="range-dates">' + d1 + '<br>' + d2 + '</div>' +
-      '<div class="range-sub">período</div>' +
-    '</div>' +
-    '<div class="event-divider"></div>' +
-    '<div class="event-info"><div class="event-label">' + label + '</div></div>' +
-  '</div>';
-}
+const secoes = {
 
-function callout(icon, title, body, bg, border) {
-  return '<div class="callout" style="background:' + bg + ';border:1.5px solid ' + border + '">' +
-    '<div class="callout-icon">' + icon + '</div>' +
-    '<div class="callout-text"><strong>' + title + '</strong>' + body + '</div>' +
-  '</div>';
-}
-
-function schedBlock(badge, ac, rows) {
-  var rowsHtml = rows.map(function(r) {
-    return '<div class="sched-row"><div class="sched-time">' + r[0] + '</div><div class="sched-lang">' + r[1] + '</div></div>';
-  }).join('');
-  return '<div class="sched-block">' +
-    '<span class="sched-badge" style="background:' + ac + '18;color:' + ac + '">' + badge + '</span>' +
-    '<div class="sched-table">' + rowsHtml + '</div>' +
-  '</div>';
-}
-
-var sections = {
   nivelamento: {
     title: 'Provas de Nivelamento',
-    render: function() {
-      var A = '#4dc8c8';
-      return callout('📋','O que são?','Provas para identificar o nível ideal para estudar no NLC. São on-line, gratuitas e não geram certificado ou declaração.','#f0fafa','#b8e8e8') +
-        callout('🕗','Quando?','Toda <strong>segunda-feira de julho de 2026</strong>, das <strong>08h às 19h</strong>. Resultados por e-mail em até 3 dias úteis.','#f0f9ff','#b8dff7') +
-        callout('🔗','Como acessar?','Disponível em <strong>linktr.ee/nlcufpe</strong> no período informado. Só entrar e fazer!','#f0fff4','#b8f7d0') +
-        '<div style="margin-top:1.1rem">' +
-          ev('07','Jul','Seg','Provas disponíveis — 08h às 19h', A, false) +
-          ev('14','Jul','Seg','Provas disponíveis — 08h às 19h', A, false) +
-          ev('21','Jul','Seg','Provas disponíveis — 08h às 19h', A, false) +
-          ev('28','Jul','Seg','Provas disponíveis — 08h às 19h', A, false) +
-        '</div>';
-    }
+    sub: 'On-line, gratuitas · apenas para identificar seu nível no NLC',
+    info: 'Esteja em local tranquilo — as provas podem ter questões de áudio, vídeo e gravações. Prepare-se antes de começar!',
+    html: () => `
+      <div class="link-box">
+        <p><strong>Onde fazer a prova?</strong>Acesse o Linktree no dia informado e escolha o idioma desejado.</p>
+        <a href="https://linktr.ee/nlcufpe" target="_blank" rel="noopener">linktr.ee/nlcufpe</a>
+      </div>
+      <div class="content-block">
+        <div class="block-title">Datas das provas · Resultados por e-mail toda quinta até 18h</div>
+        <table class="nivel-table">
+          <thead>
+            <tr>
+              <th>Prova (segunda-feira)</th>
+              <th>Resultado (quinta-feira)</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${[
+              ['29/06/2026','02/07/2026'],
+              ['06/07/2026','09/07/2026'],
+              ['13/07/2026','16/07/2026'],
+              ['20/07/2026','23/07/2026'],
+              ['27/07/2026','30/07/2026'],
+            ].map(([p,r]) => `
+              <tr>
+                <td class="col-prova">${p}</td>
+                <td class="col-result">${r}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>`,
   },
 
   intensivo: {
     title: 'Curso Intensivo',
-    render: function() {
-      var A = '#f7941d';
-      return ev('10','Jun','Qua','Divulgação das turmas para o Intensivo', A, false) +
-        ev('15','Jun','Seg','Abertura das matrículas para o Intensivo', A, false) +
-        ev('08','Jul','Qua','Encerramento das matrículas para o Intensivo', A, false) +
-        ev('10','Jul','Sex','Envio das confirmações e informações do curso', A, false) +
-        ev('13','Jul','Seg','Início do Intensivo', A, true) +
-        ev('07','Ago','Sex','Encerramento do Intensivo', A, true);
-    }
+    sub: '13 de julho a 7 de agosto de 2026',
+    info: null,
+    html: () => `
+      <div class="content-block">
+        <div class="block-title">Cronograma</div>
+        <table class="datas-table">
+          ${[
+            ['10/06','quarta-feira','Divulgação das turmas'],
+            ['15/06','segunda-feira','Abertura das matrículas'],
+            ['08/07','quarta-feira','Encerramento das matrículas'],
+            ['10/07','sexta-feira','Envio das confirmações e informações do curso'],
+            ['13/07','segunda-feira','Início do Intensivo'],
+            ['07/08','sexta-feira','Encerramento do Intensivo'],
+          ].map(([d,dia,ev], i) => `
+            <tr class="${i >= 4 ? 'row-marco' : ''}">
+              <td class="td-data">${d}<span class="td-dia">${dia}</span></td>
+              <td class="td-evento">${ev}</td>
+            </tr>`).join('')}
+        </table>
+      </div>`,
   },
 
   regular: {
     title: 'Curso Regular',
-    render: function() {
-      var A = '#5aaa1e';
-      return ev('10','Jul','Sex','Divulgação das turmas para o semestre regular', A, false) +
-        ev('15','Jul','Qua','Abertura das matrículas para o semestre regular', A, false) +
-        ev('15','Ago','Sáb','Encerramento das matrículas para o semestre regular', A, false) +
-        ev('17','Ago','Seg','Envio das confirmações e informações do curso', A, false) +
-        ev('19','Ago','Qua','Início do Semestre Regular', A, true) +
-        ev('12','Dez','Sáb','Encerramento do Semestre Regular', A, true);
-    }
+    sub: '19 de agosto a 12 de dezembro de 2026',
+    info: null,
+    html: () => `
+      <div class="content-block">
+        <div class="block-title">Cronograma</div>
+        <table class="datas-table">
+          ${[
+            ['10/07','sexta-feira','Divulgação das turmas'],
+            ['15/07','quarta-feira','Abertura das matrículas'],
+            ['15/08','sábado','Encerramento das matrículas'],
+            ['17/08','segunda-feira','Envio das confirmações e informações do curso'],
+            ['19/08','quarta-feira','Início do Semestre Regular'],
+            ['12/12','sábado','Encerramento do Semestre Regular'],
+          ].map(([d,dia,ev], i) => `
+            <tr class="${i >= 4 ? 'row-marco' : ''}">
+              <td class="td-data">${d}<span class="td-dia">${dia}</span></td>
+              <td class="td-evento">${ev}</td>
+            </tr>`).join('')}
+        </table>
+      </div>`,
   },
 
   proficiencia: {
-    title: 'Exame de Proficiência – ProfNLC B1',
-    render: function() {
-      var A = '#dc2743';
-      return callout('🏅','O que é o ProfNLC B1?','Provas de nível B1 nos formatos <strong>presencial e remoto</strong>. O candidato aprovado recebe certificado equivalente ao QECR (B1). O edital completo é publicado junto à abertura das inscrições.','#fff5f6','#f7b8c2') +
-        evRange('20/08','13/09','Período de inscrições', A) +
-        ev('14','Set','Seg','Confirmações por e-mail', A, false) +
-        ev('16','Set','Qua','Provas on-line', A, true) +
-        ev('17','Set','Qui','Provas presenciais', A, true) +
-        ev('25','Set','Sex','Resultados e envio dos certificados', A, false) +
-        schedBlock('16 de setembro (Qua) · Provas On-line', A, [
-          ['11h00 – 12h30', 'Espanhol'],
-          ['14h00 – 15h30', 'Francês'],
-          ['17h00 – 18h30', 'Inglês']
-        ]) +
-        schedBlock('17 de setembro (Qui) · Provas Presenciais', A, [
-          ['11h00 – 12h30', 'Espanhol'],
-          ['14h00 – 15h30', 'Francês'],
-          ['17h00 – 18h30', 'Inglês']
-        ]);
-    }
-  }
+    title: 'Exames de Proficiência – ProfNLC B1',
+    sub: 'Certificado equivalente ao nível B1 do Quadro Europeu de Referência',
+    info: 'Provas disponíveis nos formatos on-line e presencial. O edital completo será publicado simultaneamente à abertura das inscrições.',
+    html: () => `
+      <div class="content-block">
+        <div class="block-title">Inscrições e confirmação</div>
+        <table class="datas-table">
+          <tr>
+            <td class="td-data">20/08 – 13/09<span class="td-dia">período de inscrições</span></td>
+            <td class="td-evento">Inscrições abertas</td>
+          </tr>
+          <tr>
+            <td class="td-data">14/09<span class="td-dia">segunda-feira</span></td>
+            <td class="td-evento">Confirmações enviadas por e-mail</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="content-block">
+        <div class="block-title">Provas on-line — quarta-feira, 16/09/2026</div>
+        ${[
+          ['11:00h – 12:30h','Espanhol'],
+          ['14:00h – 15:30h','Francês'],
+          ['17:00h – 18:30h','Inglês'],
+        ].map(([h,id]) => `
+          <div class="horario-row">
+            <span class="horario-hora">${h}</span>
+            <span class="horario-idioma">${id}</span>
+            <span class="horario-badge badge-online">On-line</span>
+          </div>`).join('')}
+      </div>
+
+      <div class="content-block">
+        <div class="block-title">Provas presenciais — quinta-feira, 17/09/2026</div>
+        ${[
+          ['11:00h – 12:30h','Espanhol'],
+          ['14:00h – 15:30h','Francês'],
+          ['17:00h – 18:30h','Inglês'],
+        ].map(([h,id]) => `
+          <div class="horario-row">
+            <span class="horario-hora">${h}</span>
+            <span class="horario-idioma">${id}</span>
+            <span class="horario-badge badge-presencial">Presencial</span>
+          </div>`).join('')}
+        <p style="font-size:.75rem;color:#aaa;margin-top:.9rem;">Local: Sala 184, CAC UFPE, Campus Recife</p>
+      </div>
+
+      <div class="content-block">
+        <div class="block-title">Resultado</div>
+        <table class="datas-table">
+          <tr class="row-marco">
+            <td class="td-data">25/09<span class="td-dia">sexta-feira</span></td>
+            <td class="td-evento">Divulgação dos resultados e envio dos certificados</td>
+          </tr>
+        </table>
+      </div>`,
+  },
+
 };
 
-function show(id) {
-  var s = sections[id];
+/* acessibilidade — teclado */
+document.querySelectorAll('.sec-card[role="button"]').forEach(card => {
+  card.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
+  });
+});
+
+function showDetail(id) {
+  const s = secoes[id];
   document.getElementById('home').style.display = 'none';
-  var det = document.getElementById('detail');
+
+  const det = document.getElementById('detail');
   det.style.display = 'block';
   det.classList.remove('fade');
   void det.offsetWidth;
   det.classList.add('fade');
+
   document.getElementById('d-title').textContent = s.title;
-  document.getElementById('d-body').innerHTML = s.render();
-  window.scrollTo({top:0, behavior:'smooth'});
+  document.getElementById('d-sub').textContent   = s.sub;
+
+  let html = '';
+  if (s.info) {
+    html += `<div class="info-box">
+      <span class="info-box-icon">${ICON_INFO}</span>
+      <p>${s.info}</p>
+    </div>`;
+  }
+  html += s.html();
+  document.getElementById('d-body').innerHTML = html;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function back() {
+function goBack() {
   document.getElementById('detail').style.display = 'none';
-  var home = document.getElementById('home');
+  const home = document.getElementById('home');
   home.style.display = 'block';
   home.classList.remove('fade');
   void home.offsetWidth;
   home.classList.add('fade');
-  window.scrollTo({top:0, behavior:'smooth'});
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>
 </body>
