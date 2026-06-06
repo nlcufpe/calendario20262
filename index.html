@@ -529,7 +529,10 @@ document.querySelectorAll('.sec-card[role="button"]').forEach(card => {
   });
 });
 
-function showDetail(id) {
+// Registra a home no histórico ao carregar
+history.replaceState({ page: 'home' }, '');
+
+function renderDetail(id) {
   const s = secoes[id];
   document.getElementById('home').style.display = 'none';
 
@@ -554,7 +557,12 @@ function showDetail(id) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function goBack() {
+function showDetail(id) {
+  history.pushState({ page: 'detail', id }, '');
+  renderDetail(id);
+}
+
+function renderHome() {
   document.getElementById('detail').style.display = 'none';
   const home = document.getElementById('home');
   home.style.display = 'block';
@@ -563,6 +571,19 @@ function goBack() {
   home.classList.add('fade');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+function goBack() {
+  history.back();
+}
+
+// Intercepta botão voltar do browser e swipe do celular
+window.addEventListener('popstate', e => {
+  if (!e.state || e.state.page === 'home') {
+    renderHome();
+  } else if (e.state.page === 'detail') {
+    renderDetail(e.state.id);
+  }
+});
 </script>
 </body>
 </html>
