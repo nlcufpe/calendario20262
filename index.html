@@ -31,8 +31,8 @@
 
   /* ── INTRO ── */
   .home-intro { text-align: center; margin-bottom: 2rem; }
-  .home-intro h2 { font-size: 1.3rem; font-weight: 800; color: #1a1a1a; margin-bottom: .35rem; }
-  .home-intro p { font-size: .85rem; color: #aaa; }
+  .home-intro h1 { font-size: 1.3rem; font-weight: 800; color: #1a1a1a; margin-bottom: .35rem; }
+  .home-intro p { font-size: .85rem; color: #777; }
 
   /* ── GRID ── */
   .sec-grid {
@@ -45,16 +45,26 @@
   /* ── CARDS ── */
   .sec-card {
     background: #fff; border-radius: 16px; overflow: hidden;
-    cursor: pointer; transition: box-shadow .2s, transform .18s;
+    cursor: pointer;
+    transition: box-shadow .2s, transform .18s, border-color .2s;
     box-shadow: 0 1px 4px rgba(0,0,0,.07);
+    border: 1.5px solid transparent;
     display: flex; flex-direction: column;
-    min-height: 120px;                      /* altura mínima uniforme */
+    min-height: 120px;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
   }
-  .sec-card:hover  { box-shadow: 0 8px 28px rgba(0,0,0,.11); transform: translateY(-3px); }
+  .sec-card:hover  {
+    box-shadow: 0 8px 28px rgba(0,0,0,.11);
+    transform: translateY(-3px);
+    border-color: #e8e8e8;
+  }
   .sec-card:active { transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,.08); }
-  .sec-card:focus-visible { outline: 2.5px solid #f7941d; outline-offset: 2px; }
+  .sec-card:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(247,148,29,.35);
+    border-color: #f7941d;
+  }
 
   .sec-accent { height: 7px; width: 100%; flex-shrink: 0; }
   .sec-card-body {
@@ -74,17 +84,59 @@
   }
   .sec-card:hover .sec-arrow { color: #f7941d; transform: translateX(3px); }
 
-  /* datas nos cards — consistência visual */
-  .sec-dates {
-    display: flex; align-items: center; gap: .4rem;
-    flex-wrap: wrap;
-  }
+  .sec-dates { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
   .sec-date-chip {
     font-size: .7rem; font-weight: 600;
     padding: .22rem .65rem; border-radius: 20px;
-    background: #f4f4f4; color: #666; white-space: nowrap;
+    background: #f4f4f4; color: #555; white-space: nowrap;
   }
-  .sec-sub { font-size: .72rem; color: #bbb; line-height: 1.45; margin-top: .1rem; }
+  .sec-sub { font-size: .72rem; color: #999; line-height: 1.45; margin-top: .1rem; }
+
+  /* ── CARD DESTAQUE ── */
+  .sec-card-destaque {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    min-height: auto;
+    border: 2px solid #c8eebc;
+    background: #fafffe;
+  }
+  .sec-card-destaque:hover { border-color: #5aaa1e; }
+  .sec-card-destaque:focus-visible { box-shadow: 0 0 0 3px rgba(90,170,30,.3); border-color: #5aaa1e; }
+  .sec-accent-lateral { width: 7px; flex-shrink: 0; }
+  .sec-card-body-destaque {
+    padding: 1.4rem 1.5rem;
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 1rem; flex: 1;
+  }
+  .sec-destaque-info { flex: 1; }
+  .sec-destaque-label {
+    font-size: .68rem; font-weight: 700; letter-spacing: .6px;
+    text-transform: uppercase; color: #3d8a00; margin-bottom: .4rem;
+  }
+  .sec-destaque-title {
+    font-size: 1.15rem; font-weight: 800; color: #1a1a1a;
+    line-height: 1.2; margin-bottom: .7rem;
+  }
+  .destaque-datas-grid {
+    display: flex; flex-wrap: wrap; gap: .4rem 1.8rem;
+  }
+  .destaque-data-item { display: flex; flex-direction: column; gap: .08rem; }
+  .destaque-data-label {
+    font-size: .63rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .5px; color: #7ab85a;
+  }
+  .destaque-data-valor { font-size: .87rem; font-weight: 700; color: #1a1a1a; }
+  .sec-destaque-arrow {
+    color: #b8dba8; font-size: 1.7rem; line-height: 1; flex-shrink: 0;
+    transition: color .2s, transform .2s;
+  }
+  .sec-card-destaque:hover .sec-destaque-arrow { color: #5aaa1e; transform: translateX(3px); }
+  @media (max-width: 520px) {
+    .sec-card-destaque { flex-direction: column; }
+    .sec-accent-lateral { width: 100%; height: 7px; }
+    .sec-card-body-destaque { flex-direction: column; align-items: flex-start; padding: 1.2rem; }
+    .sec-destaque-arrow { display: none; }
+  }
 
   /* ── DETALHE ── */
   #detail { display: none; }
@@ -93,22 +145,29 @@
     background: #fff; border: 1.5px solid #e4e4e4; color: #555;
     font-size: .83rem; font-weight: 600; cursor: pointer;
     display: inline-flex; align-items: center; gap: .45rem;
-    margin-bottom: 1.8rem; padding: .6rem 1.1rem;
-    border-radius: 10px; transition: border-color .2s, color .2s;
+    margin-bottom: 1.8rem; padding: .7rem 1.2rem;
+    border-radius: 10px;
+    transition: border-color .2s, color .2s, box-shadow .2s;
     box-shadow: 0 1px 3px rgba(0,0,0,.05);
     -webkit-tap-highlight-color: transparent;
+    min-height: 44px; /* área de toque mínima recomendada */
   }
   .back-btn svg { flex-shrink: 0; pointer-events: none; }
-  .back-btn:hover { border-color: #f7941d; color: #f7941d; }
-  .back-btn:focus-visible { outline: 2px solid #f7941d; outline-offset: 2px; }
+  .back-btn:hover { border-color: #f7941d; color: #f7941d; box-shadow: 0 2px 8px rgba(247,148,29,.15); }
+  .back-btn:active { transform: scale(.97); }
+  .back-btn:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(247,148,29,.35); border-color: #f7941d; }
 
+  /* ── CABEÇALHO DO DETALHE ── */
   .detail-header { margin-bottom: 1.6rem; }
   .detail-eyebrow {
     font-size: .68rem; font-weight: 700; letter-spacing: .8px;
     text-transform: uppercase; color: #f7941d; margin-bottom: .35rem;
   }
-  .detail-title { font-size: 1.4rem; font-weight: 800; color: #1a1a1a; line-height: 1.2; margin-bottom: .3rem; }
-  .detail-sub { font-size: .84rem; color: #aaa; }
+  .detail-title {
+    font-size: 1.4rem; font-weight: 800; color: #1a1a1a;
+    line-height: 1.2; margin-bottom: .3rem;
+  }
+  .detail-sub { font-size: .84rem; color: #999; }
 
   /* ── BLOCOS ── */
   .content-block {
@@ -116,19 +175,53 @@
     padding: 1.4rem; margin-bottom: 1rem;
     box-shadow: 0 1px 5px rgba(0,0,0,.06);
   }
-  /* Título interno do bloco */
+  .content-block-matricula {
+    background: #f4fbf1; border: 1.5px solid #c8eebc;
+    display: flex; align-items: center;
+    justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  }
+  .matricula-info-label {
+    font-size: .68rem; font-weight: 700; letter-spacing: .6px;
+    text-transform: uppercase; color: #3d8a00; margin-bottom: .3rem;
+  }
+  .matricula-info-datas { font-size: 1rem; font-weight: 800; color: #1a1a1a; margin-bottom: .2rem; }
+  .matricula-info-desc { font-size: .8rem; color: #555; }
+
+  /* Botão matrícula desabilitado */
+  .btn-matricula-disabled {
+    display: inline-flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: .2rem;
+    background: #f0f0f0; color: #aaa;
+    font-size: .84rem; font-weight: 700;
+    padding: .8rem 1.4rem; border-radius: 10px;
+    border: 1.5px solid #e4e4e4;
+    cursor: not-allowed; white-space: nowrap;
+    min-height: 56px; text-align: center;
+  }
+  .btn-matricula-disabled span { font-size: .7rem; font-weight: 500; color: #bbb; }
+
+  /* Botão matrícula ativo (para quando tiver link) */
+  .btn-matricula {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: #5aaa1e; color: #fff;
+    font-size: .88rem; font-weight: 700;
+    padding: .82rem 1.5rem; border-radius: 10px;
+    text-decoration: none; white-space: nowrap;
+    border: none; cursor: pointer;
+    box-shadow: 0 2px 10px rgba(90,170,30,.3);
+    transition: background .18s, transform .15s, box-shadow .18s;
+    min-height: 44px;
+  }
+  .btn-matricula:hover { background: #4a9010; box-shadow: 0 4px 16px rgba(90,170,30,.35); }
+  .btn-matricula:active { transform: scale(.97); }
+  .btn-matricula:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(90,170,30,.4); }
+  .btn-matricula svg { flex-shrink: 0; pointer-events: none; }
+
   .block-title {
     font-size: .72rem; font-weight: 700; letter-spacing: .6px;
     text-transform: uppercase; color: #bbb;
     margin-bottom: 1rem; padding-bottom: .6rem;
     border-bottom: 1px solid #f0f0f0;
-  }
-  /* Data-destaque do bloco (ex: "16/09/2026 · quarta-feira") */
-  .block-date-tag {
-    display: inline-flex; align-items: center; gap: .4rem;
-    font-size: .75rem; font-weight: 700;
-    padding: .25rem .75rem; border-radius: 20px;
-    margin-bottom: .85rem;
   }
 
   /* ── INFO BOX ── */
@@ -152,40 +245,36 @@
   .link-box a {
     font-size: .82rem; font-weight: 700; color: #f7941d;
     text-decoration: none; white-space: nowrap;
-    padding: .5rem 1rem; border-radius: 8px;
+    padding: .6rem 1.1rem; border-radius: 8px;
     background: #fff3e0; border: 1.5px solid #fde5b8;
-    transition: background .18s;
+    transition: background .18s, box-shadow .18s;
+    min-height: 44px; display: inline-flex; align-items: center;
   }
-  .link-box a:hover { background: #fde8c4; }
+  .link-box a:hover { background: #fde8c4; box-shadow: 0 2px 8px rgba(247,148,29,.2); }
+  .link-box a:active { transform: scale(.97); }
+  .link-box a:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(247,148,29,.35); }
 
-  /* ── TABELA DE DATAS ── */
+  /* ── TABELAS ── */
   .datas-table { width: 100%; border-collapse: collapse; }
   .datas-table tr { border-bottom: 1px solid #f2f2f2; }
   .datas-table tr:last-child { border-bottom: none; }
   .datas-table td { padding: .78rem .4rem; font-size: .84rem; line-height: 1.45; vertical-align: middle; }
-  .td-data {
-    font-weight: 700; color: #1a1a1a;
-    width: 38%;                   /* proporcional, não min-width fixo */
-    padding-right: .75rem;
-  }
+  .td-data { font-weight: 700; color: #1a1a1a; width: 38%; padding-right: .75rem; }
   .td-dia { font-size: .69rem; color: #bbb; font-weight: 400; display: block; margin-top: .08rem; }
   .td-evento { color: #444; }
-
-  /* linha destacada = data principal (início/fim) */
   .row-marco { background: #f8fff4; }
   .row-marco .td-data { color: #3d8a00; }
   .row-marco .td-evento { color: #2d6600; font-weight: 600; }
 
-  /* ── TABELA NIVELAMENTO ── */
   .nivel-table { width: 100%; border-collapse: collapse; }
   .nivel-table th {
     font-size: .7rem; font-weight: 700; letter-spacing: .5px;
     text-transform: uppercase; color: #aaa;
-    padding: 0 .4rem .6rem; text-align: left;
+    padding: 0 .4rem .7rem; text-align: left;
     border-bottom: 2px solid #f0f0f0;
   }
   .nivel-table td {
-    padding: .6rem .4rem; font-size: .84rem;
+    padding: .65rem .4rem; font-size: .84rem;
     border-bottom: 1px solid #f5f5f5; vertical-align: middle;
   }
   .nivel-table tr:last-child td { border-bottom: none; }
@@ -195,17 +284,17 @@
   /* ── HORÁRIOS ── */
   .horario-row {
     display: flex; align-items: center; gap: .75rem;
-    padding: .62rem 0; border-bottom: 1px solid #f5f5f5; font-size: .84rem;
+    padding: .65rem 0; border-bottom: 1px solid #f5f5f5; font-size: .84rem;
   }
   .horario-row:last-child { border-bottom: none; }
   .horario-hora { font-weight: 700; color: #1a1a1a; flex: 0 0 130px; }
   .horario-idioma { color: #555; flex: 1; }
   .horario-badge {
-    font-size: .67rem; font-weight: 700; padding: .2rem .6rem;
+    font-size: .67rem; font-weight: 700; padding: .22rem .65rem;
     border-radius: 20px; white-space: nowrap; flex-shrink: 0;
   }
-  .badge-online     { background: #e0f7f4; color: #0a8a7a; }
-  .badge-presencial { background: #fff3e0; color: #d4720a; }
+  .badge-online     { background: #e0f7f4; color: #076e65; }
+  .badge-presencial { background: #fff3e0; color: #b85e00; }
 
   /* ── CTA BAR ── */
   .cta-bar {
@@ -221,13 +310,16 @@
   .cta-link {
     background: #f7941d; color: #fff;
     font-weight: 700; font-size: .88rem;
-    padding: .72rem 1.4rem; border-radius: 10px;
+    padding: .78rem 1.5rem; border-radius: 10px;
     text-decoration: none; white-space: nowrap;
-    transition: background .2s;
+    transition: background .18s, transform .15s, box-shadow .18s;
     box-shadow: 0 2px 8px rgba(247,148,29,.3);
     -webkit-tap-highlight-color: transparent;
+    min-height: 44px; display: inline-flex; align-items: center;
   }
-  .cta-link:hover { background: #e07f0a; }
+  .cta-link:hover { background: #e07f0a; box-shadow: 0 4px 16px rgba(247,148,29,.35); }
+  .cta-link:active { transform: scale(.97); }
+  .cta-link:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(247,148,29,.45); }
 
   /* ── FOOTER ── */
   footer {
@@ -239,13 +331,117 @@
     text-decoration: none;
     background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
     color: #fff; font-weight: 700; font-size: .9rem;
-    padding: .78rem 1.7rem; border-radius: 10px; margin-bottom: .85rem;
+    padding: .82rem 1.8rem; border-radius: 10px; margin-bottom: .85rem;
     box-shadow: 0 3px 12px rgba(220,39,67,.22);
-    transition: opacity .2s; -webkit-tap-highlight-color: transparent;
+    transition: opacity .2s, transform .15s;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 44px;
   }
   .insta-btn svg { flex-shrink: 0; pointer-events: none; }
   .insta-btn:hover { opacity: .88; }
-  .footer-copy { font-size: .7rem; color: #ccc; }
+  .insta-btn:active { transform: scale(.97); }
+  .insta-btn:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(220,39,67,.4); opacity: .88; }
+  .footer-copy { font-size: .7rem; color: #bbb; }
+
+  /* ── TURMAS DO INTENSIVO ── */
+  .turmas-secao { margin-bottom: 1rem; }
+
+  /* Header do idioma */
+  .turmas-idioma-header {
+    display: flex; align-items: center; gap: .75rem;
+    padding: .85rem 1.1rem;
+    border-radius: 12px 12px 0 0;
+    margin-bottom: 0;
+  }
+  .turmas-idioma-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+  .turmas-idioma-nome {
+    font-size: .95rem; font-weight: 800; color: #fff; flex: 1;
+  }
+  .turmas-idioma-count {
+    font-size: .72rem; font-weight: 600;
+    background: rgba(255,255,255,.22);
+    color: #fff; padding: .18rem .6rem;
+    border-radius: 20px; white-space: nowrap;
+  }
+
+  /* Container de níveis */
+  .turmas-niveis {
+    background: #fff;
+    border-radius: 0 0 14px 14px;
+    border: 1.5px solid #ebebeb;
+    border-top: none;
+    overflow: hidden;
+  }
+
+  /* Cada nível */
+  .turma-nivel {
+    padding: .9rem 1.1rem;
+    border-bottom: 1px solid #f3f3f3;
+  }
+  .turma-nivel:last-child { border-bottom: none; }
+
+  .turma-nivel-header {
+    display: flex; align-items: center; gap: .6rem;
+    margin-bottom: .6rem;
+  }
+  .turma-nivel-badge {
+    font-size: .68rem; font-weight: 800;
+    padding: .2rem .65rem; border-radius: 20px;
+    letter-spacing: .2px; white-space: nowrap;
+  }
+  .turma-nivel-nome {
+    font-size: .82rem; font-weight: 600; color: #555;
+  }
+
+  /* Chips de horário */
+  .turma-horarios { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .turma-horario-chip {
+    display: inline-flex; align-items: center; gap: .4rem;
+    padding: .38rem .75rem; border-radius: 10px;
+    font-size: .79rem; font-weight: 600; border: 1.5px solid;
+  }
+  .chip-remota {
+    background: #f0fdf9; color: #076e65;
+    border-color: #b2e8e2;
+  }
+  .chip-presencial {
+    background: #fff8f0; color: #b85e00;
+    border-color: #fdd9a8;
+  }
+  .chip-dot {
+    width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+  }
+  .chip-remota .chip-dot    { background: #0a9e8a; }
+  .chip-presencial .chip-dot { background: #d4720a; }
+
+  .sec-destaque-matricula {
+    font-size: .84rem; font-weight: 600; color: #b85e00;
+    margin-top: .6rem;
+  }
+  .sec-destaque-idiomas {
+    display: flex; flex-wrap: wrap; gap: .35rem;
+    margin-top: .55rem;
+  }
+  .sec-destaque-idiomas span {
+    font-size: .72rem; font-weight: 600;
+    padding: .22rem .7rem; border-radius: 20px;
+    background: #edfbf0; color: #1a7a3a;
+    border: 1px solid #c8eebc;
+  }
+  .sec-destaque-cta {
+    display: inline-flex; align-items: center;
+    margin-top: .75rem;
+    font-size: .82rem; font-weight: 700;
+    color: #5aaa1e;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color .2s;
+  }
+  .sec-card-destaque:hover .sec-destaque-cta { color: #3d8a00; }
 
   /* ── ANIMAÇÃO ── */
   .fade { animation: fadeIn .22s ease both; }
@@ -268,11 +464,31 @@
   <!-- HOME -->
   <div id="home">
     <div class="home-intro">
-      <h2>Calendário 2026.2</h2>
+      <h1>Calendário 2026.2</h1>
       <p>Selecione uma seção para ver as datas</p>
     </div>
 
     <div class="sec-grid">
+
+      <!-- Intensivo — destaque (topo, linha inteira) -->
+      <div class="sec-card sec-card-destaque" onclick="showDetail('intensivo')" role="button" tabindex="0" aria-label="Ver detalhes do Curso Intensivo de Julho">
+        <div class="sec-accent-lateral" style="background:#5aaa1e"></div>
+        <div class="sec-card-body-destaque">
+          <div class="sec-destaque-info">
+            <p class="sec-destaque-label">🔜 Próximo evento</p>
+            <h2 class="sec-destaque-title">Curso Intensivo de Julho</h2>
+            <p class="sec-destaque-matricula">Matrículas abrem em 15/06 (segunda-feira)</p>
+            <div class="sec-destaque-idiomas">
+              <span>Alemão</span>
+              <span>Espanhol</span>
+              <span>Francês</span>
+              <span>Inglês</span>
+            </div>
+            <p class="sec-destaque-cta">Ver horários e turmas disponíveis →</p>
+          </div>
+          <span class="sec-destaque-arrow" aria-hidden="true">›</span>
+        </div>
+      </div>
 
       <!-- Nivelamento -->
       <div class="sec-card" onclick="showDetail('nivelamento')" role="button" tabindex="0" aria-label="Provas de Nivelamento">
@@ -286,21 +502,6 @@
             <span class="sec-date-chip">29/06 – 27/07</span>
             <span class="sec-date-chip">Toda segunda-feira</span>
           </div>
-        </div>
-      </div>
-
-      <!-- Intensivo -->
-      <div class="sec-card" onclick="showDetail('intensivo')" role="button" tabindex="0" aria-label="Curso Intensivo">
-        <div class="sec-accent" style="background:#5aaa1e"></div>
-        <div class="sec-card-body">
-          <div class="sec-card-top">
-            <span class="sec-name">Curso Intensivo</span>
-            <span class="sec-arrow">›</span>
-          </div>
-          <div class="sec-dates">
-            <span class="sec-date-chip">13/07 – 07/08</span>
-          </div>
-          <div class="sec-sub">Matrículas: 15/06 a 08/07</div>
         </div>
       </div>
 
@@ -319,20 +520,6 @@
         </div>
       </div>
 
-      <!-- Proficiência B1 -->
-      <div class="sec-card" onclick="showDetail('proficiencia')" role="button" tabindex="0" aria-label="Exames de Proficiência ProfNLC B1">
-        <div class="sec-accent" style="background:#7b5ea7"></div>
-        <div class="sec-card-body">
-          <div class="sec-card-top">
-            <span class="sec-name">Exames de Proficiência – ProfNLC B1</span>
-            <span class="sec-arrow">›</span>
-          </div>
-          <div class="sec-dates">
-            <span class="sec-date-chip">Provas: 16–17/09</span>
-          </div>
-          <div class="sec-sub">Inscrições: 20/08 a 13/09</div>
-        </div>
-      </div>
 
     </div>
 
@@ -349,8 +536,8 @@
       Voltar ao calendário
     </button>
     <div class="detail-header">
-      <div class="detail-eyebrow">Calendário NLC 2026.2</div>
-      <div id="d-title" class="detail-title"></div>
+      <p class="detail-eyebrow">Calendário NLC 2026.2</p>
+      <h1 id="d-title" class="detail-title"></h1>
       <div id="d-sub" class="detail-sub"></div>
     </div>
     <div id="d-body"></div>
@@ -362,7 +549,7 @@
 </main>
 
 <footer>
-  <a href="https://instagram.com/nlc.ufpe" target="_blank" rel="noopener" class="insta-btn">
+  <a href="https://instagram.com/nlc.ufpe" target="_blank" rel="noopener" class="insta-btn" aria-label="Seguir o NLC UFPE no Instagram (abre em nova aba)">
     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
       <rect x="2" y="2" width="20" height="20" rx="5"/>
       <circle cx="12" cy="12" r="4"/>
@@ -417,24 +604,89 @@ const secoes = {
     title: 'Curso Intensivo',
     sub: '13 de julho a 7 de agosto de 2026',
     info: null,
-    html: () => `
-      <div class="content-block">
-        <div class="block-title">Cronograma</div>
-        <table class="datas-table">
-          ${[
-            ['10/06','quarta-feira','Divulgação das turmas'],
-            ['15/06','segunda-feira','Abertura das matrículas'],
-            ['08/07','quarta-feira','Encerramento das matrículas'],
-            ['10/07','sexta-feira','Envio das confirmações e informações do curso'],
-            ['13/07','segunda-feira','Início do Intensivo'],
-            ['07/08','sexta-feira','Encerramento do Intensivo'],
-          ].map(([d,dia,ev], i) => `
-            <tr class="${i >= 4 ? 'row-marco' : ''}">
-              <td class="td-data">${d}<span class="td-dia">${dia}</span></td>
-              <td class="td-evento">${ev}</td>
-            </tr>`).join('')}
-        </table>
-      </div>`,
+    html: function() {
+      var cronograma = [
+        ['10/06','quarta-feira','Divulgação das turmas', false],
+        ['15/06','segunda-feira','Abertura das matrículas', false],
+        ['08/07','quarta-feira','Encerramento das matrículas', false],
+        ['10/07','sexta-feira','Envio das confirmações e informações do curso', false],
+        ['13/07','segunda-feira','Início do Intensivo', true],
+        ['07/08','sexta-feira','Encerramento do Intensivo', true]
+      ];
+      var linhasCron = cronograma.map(function(r) {
+        return '<tr class="' + (r[3] ? 'row-marco' : '') + '"><td class="td-data">' + r[0] + '<span class="td-dia">' + r[1] + '</span></td><td class="td-evento">' + r[2] + '</td></tr>';
+      }).join('');
+
+      var idiomas = [
+        { nome: 'Inglês',   cor: '#2563eb', bgCor: '#1d4ed8',
+          niveis: [
+            { cod: 'A1.1', nome: 'Básico 1',        hs: [['09h–12h','R'],['14h–17h','R'],['19h–22h','R']] },
+            { cod: 'A1.2', nome: 'Básico 2',         hs: [['14h–17h','R'],['19h–22h','R']] },
+            { cod: 'A2.1', nome: 'Intermediário 1',  hs: [['09h–12h','P'],['09h–12h','R'],['09h–12h','R']] },
+            { cod: 'A2.2', nome: 'Intermediário 2',  hs: [['18h–21h','P'],['19h–22h','R']] },
+            { cod: 'B1.2', nome: 'Pós-Interm. 2',   hs: [['09h–12h','P']] }
+          ]
+        },
+        { nome: 'Francês',  cor: '#7c3aed', bgCor: '#6d28d9',
+          niveis: [
+            { cod: 'A1.1', nome: 'Básico 1',         hs: [['09h–12h','P'],['19h–22h','R']] },
+            { cod: 'A2.1', nome: 'Intermediário 1',  hs: [['09h–12h','R'],['19h–22h','R']] },
+            { cod: 'A2.2', nome: 'Intermediário 2',  hs: [['14h–17h','P']] },
+            { cod: 'B1.1', nome: 'Pós-Interm. 1',   hs: [['09h–12h','R']] }
+          ]
+        },
+        { nome: 'Espanhol', cor: '#dc2626', bgCor: '#b91c1c',
+          niveis: [
+            { cod: 'A1.1', nome: 'Básico 1',         hs: [['09h–12h','R']] },
+            { cod: 'A1.2', nome: 'Básico 2',          hs: [['09h–12h','R'],['19h–22h','R']] },
+            { cod: 'A2.1', nome: 'Intermediário 1',  hs: [['19h–22h','R']] }
+          ]
+        },
+        { nome: 'Alemão',   cor: '#d97706', bgCor: '#b45309',
+          niveis: [
+            { cod: 'A1.1', nome: 'Básico 1',         hs: [['09h–12h','R']] },
+            { cod: 'A2.1', nome: 'Intermediário 1',  hs: [['19h–21h','R']] }
+          ]
+        }
+      ];
+
+      var turmasHtml = idiomas.map(function(id) {
+        var total = id.niveis.reduce(function(s,n){ return s + n.hs.length; }, 0);
+        var niveisHtml = id.niveis.map(function(n) {
+          var horariosHtml = n.hs.map(function(h) {
+            var cls   = h[1]==='P' ? 'chip-presencial' : 'chip-remota';
+            var label = h[1]==='P' ? 'Presencial' : 'Remota';
+            return '<span class="turma-horario-chip ' + cls + '"><span class="chip-dot"></span>' + h[0] + ' · ' + label + '</span>';
+          }).join('');
+          return '<div class="turma-nivel"><div class="turma-nivel-header">' +
+            '<span class="turma-nivel-badge" style="background:' + id.cor + '22;color:' + id.cor + '">' + n.cod + '</span>' +
+            '<span class="turma-nivel-nome">' + n.nome + '</span></div>' +
+            '<div class="turma-horarios">' + horariosHtml + '</div></div>';
+        }).join('');
+        return '<div class="turmas-secao">' +
+          '<div class="turmas-idioma-header" style="background:' + id.bgCor + '">' +
+            
+            '<span class="turmas-idioma-nome">' + id.nome + ' · 2ª a 6ª feira</span>' +
+            '<span class="turmas-idioma-count">' + total + ' turma' + (total>1?'s':'') + '</span>' +
+          '</div>' +
+          '<div class="turmas-niveis">' + niveisHtml + '</div>' +
+        '</div>';
+      }).join('');
+
+      return '<div class="content-block content-block-matricula">' +
+          '<div>' +
+            '<p class="matricula-info-label">Matrículas fechadas</p>' +
+            '<p class="matricula-info-datas">Abrem em 15/06 (segunda-feira)</p>' +
+            '<p class="matricula-info-desc">Encerram em 08/07 (quarta-feira). Fique de olho!</p>' +
+          '</div>' +
+          '<div class="btn-matricula-disabled" aria-disabled="true" role="button">Matrículas fechadas<span>Abrem em 15/06 (segunda-feira)</span></div>' +
+        '</div>' +
+        '<div class="content-block">' +
+          '<div class="block-title">Cronograma</div>' +
+          '<table class="datas-table">' + linhasCron + '</table>' +
+        '</div>' +
+        turmasHtml;
+    }
   },
 
   regular: {
