@@ -93,30 +93,6 @@
   .sec-sub { font-size: .72rem; color: #999; line-height: 1.45; margin-top: .1rem; }
 
   /* ── CARD DESTAQUE ── */
-  .sec-card-destaque {
-    grid-column: 1 / -1;
-    flex-direction: row;
-    min-height: auto;
-    border: 2px solid #c8eebc;
-    background: #fafffe;
-  }
-  .sec-card-destaque:hover { border-color: #5aaa1e; }
-  .sec-card-destaque:focus-visible { box-shadow: 0 0 0 3px rgba(90,170,30,.3); border-color: #5aaa1e; }
-  .sec-accent-lateral { width: 7px; flex-shrink: 0; }
-  .sec-card-body-destaque {
-    padding: 1.4rem 1.5rem;
-    display: flex; align-items: center;
-    justify-content: space-between; gap: 1rem; flex: 1;
-  }
-  .sec-destaque-info { flex: 1; }
-  .sec-destaque-label {
-    font-size: .68rem; font-weight: 700; letter-spacing: .6px;
-    text-transform: uppercase; color: #3d8a00; margin-bottom: .4rem;
-  }
-  .sec-destaque-title {
-    font-size: 1.15rem; font-weight: 800; color: #1a1a1a;
-    line-height: 1.2; margin-bottom: .7rem;
-  }
   .destaque-datas-grid {
     display: flex; flex-wrap: wrap; gap: .4rem 1.8rem;
   }
@@ -126,17 +102,8 @@
     letter-spacing: .5px; color: #7ab85a;
   }
   .destaque-data-valor { font-size: .87rem; font-weight: 700; color: #1a1a1a; }
-  .sec-destaque-arrow {
-    color: #b8dba8; font-size: 1.7rem; line-height: 1; flex-shrink: 0;
-    transition: color .2s, transform .2s;
-  }
-  .sec-card-destaque:hover .sec-destaque-arrow { color: #5aaa1e; transform: translateX(3px); }
   @media (max-width: 520px) {
-    .sec-card-destaque { flex-direction: column; }
-    .sec-accent-lateral { width: 100%; height: 7px; }
-    .sec-card-body-destaque { flex-direction: column; align-items: flex-start; padding: 1.2rem; }
-    .sec-destaque-arrow { display: none; }
-  }
+          }
 
   /* ── DETALHE ── */
   #detail { display: none; }
@@ -441,7 +408,138 @@
     text-underline-offset: 3px;
     transition: color .2s;
   }
-  .sec-card-destaque:hover .sec-destaque-cta { color: #3d8a00; }
+
+  /* ── TURMAS REESTRUTURADAS ── */
+  .turmas-section-header {
+    display: flex; align-items: baseline; gap: .6rem;
+    margin-bottom: 1.2rem; padding-bottom: .7rem;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .turmas-section-title {
+    font-size: .95rem; font-weight: 800; color: #1a1a1a;
+  }
+  .turmas-section-sub {
+    font-size: .75rem; color: #aaa; font-weight: 500;
+  }
+
+  .turmas-idiomas-grid {
+    display: flex; flex-direction: column; gap: 1.2rem;
+  }
+
+  /* Card por idioma */
+  .turma-idioma-card {
+    border: 1.5px solid #ebebeb; border-radius: 12px; overflow: hidden;
+  }
+  .turma-idioma-topo {
+    padding: .7rem 1rem;
+    background: #fafafa;
+    border-bottom: 1px solid #ebebeb;
+  }
+  .turma-idioma-nome {
+    font-size: .95rem; font-weight: 800;
+  }
+
+  /* Níveis dentro do card */
+  .turma-idioma-niveis {
+    display: flex; flex-direction: column;
+  }
+  .turma-nivel-card {
+    padding: .8rem 1rem;
+    border-bottom: 1px solid #f5f5f5;
+  }
+  .turma-nivel-card:last-child { border-bottom: none; }
+
+  .turma-nivel-topo {
+    display: flex; align-items: center; gap: .6rem;
+    margin-bottom: .55rem;
+  }
+  .turma-nivel-cod {
+    font-size: .68rem; font-weight: 800;
+    padding: .18rem .6rem; border-radius: 6px;
+    letter-spacing: .3px; white-space: nowrap;
+  }
+  .turma-nivel-fullname {
+    font-size: .84rem; font-weight: 600; color: #333;
+  }
+
+  /* Linhas de horário */
+  .turma-nivel-horarios { display: flex; flex-direction: column; gap: .35rem; }
+  .turma-row {
+    display: flex; align-items: center; gap: .75rem;
+    font-size: .82rem;
+  }
+  .turma-row-hora {
+    font-weight: 700; color: #1a1a1a;
+    min-width: 110px; flex-shrink: 0;
+  }
+  .turma-row-mod {
+    font-size: .72rem; font-weight: 700;
+    padding: .18rem .65rem; border-radius: 20px;
+    white-space: nowrap;
+  }
+  .mod-remota    { background: #e8f7ff; color: #0369a1; }
+  .mod-presencial { background: #fff3e0; color: #b45309; }
+
+  /* ── CARDS DO INTENSIVO ── */
+  .sec-card-intensivo {
+    border: 2px solid #c8eebc;
+    background: #fafffe;
+  }
+  .sec-card-intensivo:hover { border-color: #5aaa1e; }
+  .sec-card-intensivo:focus-visible { box-shadow: 0 0 0 3px rgba(90,170,30,.3); border-color: #5aaa1e; }
+  .sec-card-intensivo .sec-card-body {
+    justify-content: space-between;
+  }
+
+  .intensivo-label {
+    font-size: .67rem; font-weight: 700; letter-spacing: .6px;
+    text-transform: uppercase; color: #3d8a00; margin-bottom: .35rem;
+  }
+  .intensivo-titulo {
+    font-size: 1rem; font-weight: 800; color: #1a1a1a; margin-bottom: .7rem;
+    line-height: 1.2;
+  }
+
+  /* Datas */
+  .intensivo-datas { display: flex; flex-direction: column; gap: .35rem; }
+  .intensivo-data-item { display: flex; flex-direction: column; gap: .05rem; }
+  .intensivo-data-label {
+    font-size: .63rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .4px; color: #7ab85a;
+  }
+  .intensivo-data-valor { font-size: .88rem; font-weight: 700; color: #1a1a1a; }
+
+  /* Idiomas */
+  .intensivo-idiomas {
+    display: flex; flex-wrap: wrap; gap: .3rem; margin-bottom: .5rem;
+  }
+  .intensivo-idiomas span {
+    font-size: .7rem; font-weight: 600;
+    padding: .18rem .6rem; border-radius: 20px;
+    background: #edfbf0; color: #1a7a3a; border: 1px solid #c8eebc;
+  }
+
+  /* Preview de horários */
+  .intensivo-horarios-preview {
+    display: flex; flex-wrap: wrap; gap: .3rem;
+  }
+  .intensivo-horarios-preview span {
+    font-size: .72rem; font-weight: 700;
+    padding: .22rem .65rem; border-radius: 8px;
+    background: #fff; border: 1.5px solid #c8eebc; color: #2d6600;
+  }
+  .sec-card-intensivo:hover .intensivo-horarios-preview span {
+    border-color: #5aaa1e; background: #f0fdf0;
+  }
+
+  /* CTA */
+  .intensivo-cta {
+    font-size: .78rem; font-weight: 700; color: #5aaa1e;
+    margin-top: .85rem;
+    text-decoration: underline; text-underline-offset: 3px;
+    transition: color .2s;
+  }
+  .sec-card-intensivo:hover .intensivo-cta { color: #3d8a00; }
 
   /* ── ANIMAÇÃO ── */
   .fade { animation: fadeIn .22s ease both; }
@@ -470,23 +568,48 @@
 
     <div class="sec-grid">
 
-      <!-- Intensivo — destaque (topo, linha inteira) -->
-      <div class="sec-card sec-card-destaque" onclick="showDetail('intensivo')" role="button" tabindex="0" aria-label="Ver detalhes do Curso Intensivo de Julho">
-        <div class="sec-accent-lateral" style="background:#5aaa1e"></div>
-        <div class="sec-card-body-destaque">
-          <div class="sec-destaque-info">
-            <p class="sec-destaque-label">🔜 Próximo evento</p>
-            <h2 class="sec-destaque-title">Curso Intensivo de Julho</h2>
-            <p class="sec-destaque-matricula">Matrículas abrem em 15/06 (segunda-feira)</p>
-            <div class="sec-destaque-idiomas">
+      <!-- Intensivo: Calendário -->
+      <div class="sec-card sec-card-intensivo" onclick="showDetail('intensivo')" role="button" tabindex="0" aria-label="Ver calendário do Curso Intensivo de Julho">
+        <div class="sec-accent" style="background:#5aaa1e"></div>
+        <div class="sec-card-body">
+          <div>
+            <p class="intensivo-label">🔜 Intensivo de Julho</p>
+            <p class="intensivo-titulo">Calendário e datas</p>
+            <div class="intensivo-datas">
+              <div class="intensivo-data-item">
+                <span class="intensivo-data-label">Matrículas</span>
+                <span class="intensivo-data-valor">Abrem 15/06</span>
+              </div>
+              <div class="intensivo-data-item">
+                <span class="intensivo-data-label">Aulas</span>
+                <span class="intensivo-data-valor">13/07 – 07/08</span>
+              </div>
+            </div>
+          </div>
+          <p class="intensivo-cta">Ver datas completas →</p>
+        </div>
+      </div>
+
+      <!-- Intensivo: Turmas -->
+      <div class="sec-card sec-card-intensivo" onclick="showDetail('intensivo')" role="button" tabindex="0" aria-label="Ver turmas e horários do Curso Intensivo de Julho">
+        <div class="sec-accent" style="background:#5aaa1e"></div>
+        <div class="sec-card-body">
+          <div>
+            <p class="intensivo-label">🔜 Intensivo de Julho</p>
+            <p class="intensivo-titulo">Turmas e horários</p>
+            <div class="intensivo-idiomas">
               <span>Alemão</span>
               <span>Espanhol</span>
               <span>Francês</span>
               <span>Inglês</span>
             </div>
-            <p class="sec-destaque-cta">Ver horários e turmas disponíveis →</p>
+            <div class="intensivo-horarios-preview">
+              <span>09h – 12h</span>
+              <span>14h – 17h</span>
+              <span>18h – 22h</span>
+            </div>
           </div>
-          <span class="sec-destaque-arrow" aria-hidden="true">›</span>
+          <p class="intensivo-cta">Ver turmas e horários →</p>
         </div>
       </div>
 
@@ -602,78 +725,28 @@ const secoes = {
 
   intensivo: {
     title: 'Curso Intensivo',
-    sub: '13 de julho a 7 de agosto de 2026',
+    sub: '13 de julho a 7 de agosto de 2026 · 2ª a 6ª feira',
     info: null,
     html: function() {
+
+      /* ── BLOCO 1: Calendário ── */
       var cronograma = [
-        ['10/06','quarta-feira','Divulgação das turmas', false],
-        ['15/06','segunda-feira','Abertura das matrículas', false],
-        ['08/07','quarta-feira','Encerramento das matrículas', false],
-        ['10/07','sexta-feira','Envio das confirmações e informações do curso', false],
-        ['13/07','segunda-feira','Início do Intensivo', true],
-        ['07/08','sexta-feira','Encerramento do Intensivo', true]
+        ['10/06','quarta-feira',  'Divulgação das turmas',                       false],
+        ['15/06','segunda-feira', 'Abertura das matrículas',                     false],
+        ['08/07','quarta-feira',  'Encerramento das matrículas',                 false],
+        ['10/07','sexta-feira',   'Envio das confirmações e informações do curso',false],
+        ['13/07','segunda-feira', 'Início do Intensivo',                         true ],
+        ['07/08','sexta-feira',   'Encerramento do Intensivo',                   true ]
       ];
       var linhasCron = cronograma.map(function(r) {
-        return '<tr class="' + (r[3] ? 'row-marco' : '') + '"><td class="td-data">' + r[0] + '<span class="td-dia">' + r[1] + '</span></td><td class="td-evento">' + r[2] + '</td></tr>';
+        return '<tr class="' + (r[3] ? 'row-marco' : '') + '">' +
+          '<td class="td-data">' + r[0] + '<span class="td-dia">' + r[1] + '</span></td>' +
+          '<td class="td-evento">' + r[2] + '</td>' +
+        '</tr>';
       }).join('');
 
-      var idiomas = [
-        { nome: 'Inglês',   cor: '#2563eb', bgCor: '#1d4ed8',
-          niveis: [
-            { cod: 'A1.1', nome: 'Básico 1',        hs: [['09h–12h','R'],['14h–17h','R'],['19h–22h','R']] },
-            { cod: 'A1.2', nome: 'Básico 2',         hs: [['14h–17h','R'],['19h–22h','R']] },
-            { cod: 'A2.1', nome: 'Intermediário 1',  hs: [['09h–12h','P'],['09h–12h','R'],['09h–12h','R']] },
-            { cod: 'A2.2', nome: 'Intermediário 2',  hs: [['18h–21h','P'],['19h–22h','R']] },
-            { cod: 'B1.2', nome: 'Pós-Interm. 2',   hs: [['09h–12h','P']] }
-          ]
-        },
-        { nome: 'Francês',  cor: '#7c3aed', bgCor: '#6d28d9',
-          niveis: [
-            { cod: 'A1.1', nome: 'Básico 1',         hs: [['09h–12h','P'],['19h–22h','R']] },
-            { cod: 'A2.1', nome: 'Intermediário 1',  hs: [['09h–12h','R'],['19h–22h','R']] },
-            { cod: 'A2.2', nome: 'Intermediário 2',  hs: [['14h–17h','P']] },
-            { cod: 'B1.1', nome: 'Pós-Interm. 1',   hs: [['09h–12h','R']] }
-          ]
-        },
-        { nome: 'Espanhol', cor: '#dc2626', bgCor: '#b91c1c',
-          niveis: [
-            { cod: 'A1.1', nome: 'Básico 1',         hs: [['09h–12h','R']] },
-            { cod: 'A1.2', nome: 'Básico 2',          hs: [['09h–12h','R'],['19h–22h','R']] },
-            { cod: 'A2.1', nome: 'Intermediário 1',  hs: [['19h–22h','R']] }
-          ]
-        },
-        { nome: 'Alemão',   cor: '#d97706', bgCor: '#b45309',
-          niveis: [
-            { cod: 'A1.1', nome: 'Básico 1',         hs: [['09h–12h','R']] },
-            { cod: 'A2.1', nome: 'Intermediário 1',  hs: [['19h–21h','R']] }
-          ]
-        }
-      ];
-
-      var turmasHtml = idiomas.map(function(id) {
-        var total = id.niveis.reduce(function(s,n){ return s + n.hs.length; }, 0);
-        var niveisHtml = id.niveis.map(function(n) {
-          var horariosHtml = n.hs.map(function(h) {
-            var cls   = h[1]==='P' ? 'chip-presencial' : 'chip-remota';
-            var label = h[1]==='P' ? 'Presencial' : 'Remota';
-            return '<span class="turma-horario-chip ' + cls + '"><span class="chip-dot"></span>' + h[0] + ' · ' + label + '</span>';
-          }).join('');
-          return '<div class="turma-nivel"><div class="turma-nivel-header">' +
-            '<span class="turma-nivel-badge" style="background:' + id.cor + '22;color:' + id.cor + '">' + n.cod + '</span>' +
-            '<span class="turma-nivel-nome">' + n.nome + '</span></div>' +
-            '<div class="turma-horarios">' + horariosHtml + '</div></div>';
-        }).join('');
-        return '<div class="turmas-secao">' +
-          '<div class="turmas-idioma-header" style="background:' + id.bgCor + '">' +
-            
-            '<span class="turmas-idioma-nome">' + id.nome + ' · 2ª a 6ª feira</span>' +
-            '<span class="turmas-idioma-count">' + total + ' turma' + (total>1?'s':'') + '</span>' +
-          '</div>' +
-          '<div class="turmas-niveis">' + niveisHtml + '</div>' +
-        '</div>';
-      }).join('');
-
-      return '<div class="content-block content-block-matricula">' +
+      var bloco1 =
+        '<div class="content-block content-block-matricula">' +
           '<div>' +
             '<p class="matricula-info-label">Matrículas fechadas</p>' +
             '<p class="matricula-info-datas">Abrem em 15/06 (segunda-feira)</p>' +
@@ -682,10 +755,83 @@ const secoes = {
           '<div class="btn-matricula-disabled" aria-disabled="true" role="button">Matrículas fechadas<span>Abrem em 15/06 (segunda-feira)</span></div>' +
         '</div>' +
         '<div class="content-block">' +
-          '<div class="block-title">Cronograma</div>' +
+          '<div class="block-title">Calendário do Intensivo</div>' +
           '<table class="datas-table">' + linhasCron + '</table>' +
-        '</div>' +
-        turmasHtml;
+        '</div>';
+
+      /* ── BLOCO 2: Turmas por idioma ── */
+      var idiomas = [
+        { nome: 'Inglês',   cor: '#2563eb', bgCor: '#1d4ed8',
+          niveis: [
+            { cod: 'A1.1', nome: 'Básico 1',        hs: [['09h – 12h','Remota'],['14h – 17h','Remota'],['19h – 22h','Remota']] },
+            { cod: 'A1.2', nome: 'Básico 2',         hs: [['14h – 17h','Remota'],['19h – 22h','Remota']] },
+            { cod: 'A2.1', nome: 'Intermediário 1',  hs: [['09h – 12h','Presencial'],['09h – 12h','Remota'],['09h – 12h','Remota']] },
+            { cod: 'A2.2', nome: 'Intermediário 2',  hs: [['18h – 21h','Presencial'],['19h – 22h','Remota']] },
+            { cod: 'B1.2', nome: 'Pós-Intermediário 2', hs: [['09h – 12h','Presencial']] }
+          ]
+        },
+        { nome: 'Francês',  cor: '#7c3aed', bgCor: '#6d28d9',
+          niveis: [
+            { cod: 'A1.1', nome: 'Básico 1',         hs: [['09h – 12h','Presencial'],['19h – 22h','Remota']] },
+            { cod: 'A2.1', nome: 'Intermediário 1',  hs: [['09h – 12h','Remota'],['19h – 22h','Remota']] },
+            { cod: 'A2.2', nome: 'Intermediário 2',  hs: [['14h – 17h','Presencial']] },
+            { cod: 'B1.1', nome: 'Pós-Intermediário 1', hs: [['09h – 12h','Remota']] }
+          ]
+        },
+        { nome: 'Espanhol', cor: '#dc2626', bgCor: '#b91c1c',
+          niveis: [
+            { cod: 'A1.1', nome: 'Básico 1',         hs: [['09h – 12h','Remota']] },
+            { cod: 'A1.2', nome: 'Básico 2',          hs: [['09h – 12h','Remota'],['19h – 22h','Remota']] },
+            { cod: 'A2.1', nome: 'Intermediário 1',  hs: [['19h – 22h','Remota']] }
+          ]
+        },
+        { nome: 'Alemão',   cor: '#b45309', bgCor: '#92400e',
+          niveis: [
+            { cod: 'A1.1', nome: 'Básico 1',         hs: [['09h – 12h','Remota']] },
+            { cod: 'A2.1', nome: 'Intermediário 1',  hs: [['19h – 21h','Remota']] }
+          ]
+        }
+      ];
+
+      var bloco2Header =
+        '<div class="turmas-section-header">' +
+          '<span class="turmas-section-title">Turmas disponíveis</span>' +
+          '<span class="turmas-section-sub">2ª a 6ª feira</span>' +
+        '</div>';
+
+      var turmasCards = idiomas.map(function(id) {
+        var niveisRows = id.niveis.map(function(n) {
+          var horariosRows = n.hs.map(function(h) {
+            var isP = h[1] === 'Presencial';
+            return '<div class="turma-row">' +
+              '<span class="turma-row-hora">' + h[0] + '</span>' +
+              '<span class="turma-row-mod ' + (isP ? 'mod-presencial' : 'mod-remota') + '">' + h[1] + '</span>' +
+            '</div>';
+          }).join('');
+          return '<div class="turma-nivel-card">' +
+            '<div class="turma-nivel-topo">' +
+              '<span class="turma-nivel-cod" style="background:' + id.cor + '18;color:' + id.cor + ';border:1px solid ' + id.cor + '44">' + n.cod + '</span>' +
+              '<span class="turma-nivel-fullname">' + n.nome + '</span>' +
+            '</div>' +
+            '<div class="turma-nivel-horarios">' + horariosRows + '</div>' +
+          '</div>';
+        }).join('');
+
+        return '<div class="turma-idioma-card">' +
+          '<div class="turma-idioma-topo" style="border-left:4px solid ' + id.bgCor + '">' +
+            '<span class="turma-idioma-nome" style="color:' + id.bgCor + '">' + id.nome + '</span>' +
+          '</div>' +
+          '<div class="turma-idioma-niveis">' + niveisRows + '</div>' +
+        '</div>';
+      }).join('');
+
+      var bloco2 =
+        '<div class="content-block">' +
+          bloco2Header +
+          '<div class="turmas-idiomas-grid">' + turmasCards + '</div>' +
+        '</div>';
+
+      return bloco1 + bloco2;
     }
   },
 
