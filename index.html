@@ -483,6 +483,7 @@
   .turma-tickets {
     display: flex; flex-wrap: wrap; gap: .5rem;
   }
+  .turma-tickets + .turma-tickets { margin-top: .5rem; }
   .turma-ticket {
     display: flex; flex-direction: column; gap: .15rem;
     padding: .55rem .85rem .5rem;
@@ -812,8 +813,8 @@ const secoes = {
       var idiomas = [
         { nome: 'Inglês',   cor: '#2563eb', bgCor: '#1d4ed8',
           niveis: [
-            { cod: 'A1.1', nome: 'Básico 1',             hs: [['09h – 12h','Remota'],['14h – 17h','Remota'],['19h – 22h','Remota']] },
-            { cod: 'A1.2', nome: 'Básico 2',              hs: [['14h – 17h','Remota'],['19h – 22h','Remota']] },
+            { cod: 'A1.1', nome: 'Básico 1',             hs: [['09h – 12h','Presencial'],['14h – 17h','Presencial'],['19h – 22h','Presencial'],['09h – 12h','Remota'],['14h – 17h','Remota'],['19h – 22h','Remota']] },
+            { cod: 'A1.2', nome: 'Básico 2',              hs: [['09h – 12h','Presencial'],['14h – 17h','Presencial'],['19h – 22h','Presencial'],['09h – 12h','Remota'],['14h – 17h','Remota'],['19h – 22h','Remota']] },
             { cod: 'A2.1', nome: 'Intermediário 1',       hs: [['09h – 12h','Presencial'],['09h – 12h','Remota'],['09h – 12h','Remota']] },
             { cod: 'A2.2', nome: 'Intermediário 2',       hs: [['18h – 21h','Presencial'],['19h – 22h','Remota']] },
             { cod: 'B1.2', nome: 'Pós-Intermediário 2',  hs: [['09h – 12h','Presencial']] }
@@ -850,7 +851,7 @@ const secoes = {
             var chave = h[0] + '|' + h[1];
             agrupado[chave] = (agrupado[chave] || 0) + 1;
           });
-          var tickets = Object.keys(agrupado).map(function(chave) {
+          function renderTicket(chave) {
             var partes = chave.split('|');
             var hora = partes[0], mod = partes[1], qtd = agrupado[chave];
             var isP = mod === 'Presencial';
@@ -858,13 +859,19 @@ const secoes = {
               '<span class="ticket-hora">' + hora + '</span>' +
               '<span class="ticket-mod">' + mod + (qtd > 1 ? ' · ' + qtd + ' turmas' : '') + '</span>' +
             '</div>';
-          }).join('');
+          }
+          var chaves = Object.keys(agrupado);
+          var remotas     = chaves.filter(function(c){ return c.indexOf('|Remota') > -1; }).map(renderTicket).join('');
+          var presenciais = chaves.filter(function(c){ return c.indexOf('|Presencial') > -1; }).map(renderTicket).join('');
+          var linhas = '';
+          if (remotas)     linhas += '<div class="turma-tickets">' + remotas + '</div>';
+          if (presenciais) linhas += '<div class="turma-tickets">' + presenciais + '</div>';
           return '<div class="turma-nivel-card">' +
             '<div class="turma-nivel-topo">' +
               '<span class="turma-nivel-cod" style="background:' + id.cor + '18;color:' + id.cor + ';border:1px solid ' + id.cor + '44">' + n.cod + '</span>' +
               '<span class="turma-nivel-fullname">' + n.nome + '</span>' +
             '</div>' +
-            '<div class="turma-tickets">' + tickets + '</div>' +
+            linhas +
           '</div>';
         }).join('');
         return '<div class="turma-idioma-card">' +
