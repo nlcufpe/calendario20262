@@ -462,23 +462,53 @@
     font-size: .84rem; font-weight: 600; color: #333;
   }
 
-  /* Linhas de horário */
-  .turma-nivel-horarios { display: flex; flex-direction: column; gap: .35rem; }
-  .turma-row {
-    display: flex; align-items: center; gap: .75rem;
-    font-size: .82rem;
+  /* Legenda das modalidades */
+  .turmas-legenda {
+    display: flex; flex-wrap: wrap; gap: .5rem 1.5rem;
+    margin-bottom: 1.2rem;
+    padding: .7rem .9rem;
+    background: #fafafa; border-radius: 10px;
   }
-  .turma-row-hora {
-    font-weight: 700; color: #1a1a1a;
-    min-width: 110px; flex-shrink: 0;
+  .legenda-item {
+    display: inline-flex; align-items: center; gap: .45rem;
+    font-size: .76rem; color: #555;
   }
-  .turma-row-mod {
-    font-size: .72rem; font-weight: 700;
-    padding: .18rem .65rem; border-radius: 20px;
-    white-space: nowrap;
+  .legenda-dot {
+    width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0;
   }
-  .mod-remota    { background: #e8f7ff; color: #0369a1; }
-  .mod-presencial { background: #fff3e0; color: #b45309; }
+  .dot-presencial { background: #f59e0b; }
+  .dot-remota     { background: #0ea5e9; }
+
+  /* Tickets de turma */
+  .turma-tickets {
+    display: flex; flex-wrap: wrap; gap: .5rem;
+  }
+  .turma-ticket {
+    display: flex; flex-direction: column; gap: .15rem;
+    padding: .55rem .85rem .5rem;
+    border-radius: 10px;
+    border: 1.5px solid;
+    border-left-width: 4px;
+    min-width: 118px;
+  }
+  .ticket-hora {
+    font-size: .92rem; font-weight: 800; color: #1a1a1a;
+    letter-spacing: .2px;
+  }
+  .ticket-mod {
+    font-size: .68rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .4px;
+  }
+  .ticket-presencial {
+    background: #fffbf2; border-color: #fde2b0;
+    border-left-color: #f59e0b;
+  }
+  .ticket-presencial .ticket-mod { color: #b45309; }
+  .ticket-remota {
+    background: #f4fbff; border-color: #c0e6f7;
+    border-left-color: #0ea5e9;
+  }
+  .ticket-remota .ticket-mod { color: #0369a1; }
 
   /* ── CARDS DO INTENSIVO ── */
   .sec-card-intensivo {
@@ -569,7 +599,7 @@
     <div class="sec-grid">
 
       <!-- Intensivo: Calendário -->
-      <div class="sec-card sec-card-intensivo" onclick="showDetail('intensivo')" role="button" tabindex="0" aria-label="Ver calendário do Curso Intensivo de Julho">
+      <div class="sec-card sec-card-intensivo" onclick="showDetail('intensivo_cal')" role="button" tabindex="0" aria-label="Ver calendário do Curso Intensivo de Julho">
         <div class="sec-accent" style="background:#5aaa1e"></div>
         <div class="sec-card-body">
           <div>
@@ -591,7 +621,7 @@
       </div>
 
       <!-- Intensivo: Turmas -->
-      <div class="sec-card sec-card-intensivo" onclick="showDetail('intensivo')" role="button" tabindex="0" aria-label="Ver turmas e horários do Curso Intensivo de Julho">
+      <div class="sec-card sec-card-intensivo" onclick="showDetail('intensivo_turmas')" role="button" tabindex="0" aria-label="Ver turmas e horários do Curso Intensivo de Julho">
         <div class="sec-accent" style="background:#5aaa1e"></div>
         <div class="sec-card-body">
           <div>
@@ -723,20 +753,18 @@ const secoes = {
       </div>`,
   },
 
-  intensivo: {
-    title: 'Curso Intensivo',
-    sub: '13 de julho a 7 de agosto de 2026 · 2ª a 6ª feira',
+  intensivo_cal: {
+    title: 'Curso Intensivo de Julho',
+    sub: 'Calendário de datas · 13 de julho a 7 de agosto de 2026',
     info: null,
     html: function() {
-
-      /* ── BLOCO 1: Calendário ── */
       var cronograma = [
-        ['10/06','quarta-feira',  'Divulgação das turmas',                       false],
-        ['15/06','segunda-feira', 'Abertura das matrículas',                     false],
-        ['08/07','quarta-feira',  'Encerramento das matrículas',                 false],
-        ['10/07','sexta-feira',   'Envio das confirmações e informações do curso',false],
-        ['13/07','segunda-feira', 'Início do Intensivo',                         true ],
-        ['07/08','sexta-feira',   'Encerramento do Intensivo',                   true ]
+        ['10/06','quarta-feira',  'Divulgação das turmas',                        false],
+        ['15/06','segunda-feira', 'Abertura das matrículas',                      false],
+        ['08/07','quarta-feira',  'Encerramento das matrículas',                  false],
+        ['10/07','sexta-feira',   'Envio das confirmações e informações do curso', false],
+        ['13/07','segunda-feira', 'Início do Intensivo',                          true ],
+        ['07/08','sexta-feira',   'Encerramento do Intensivo',                    true ]
       ];
       var linhasCron = cronograma.map(function(r) {
         return '<tr class="' + (r[3] ? 'row-marco' : '') + '">' +
@@ -745,8 +773,7 @@ const secoes = {
         '</tr>';
       }).join('');
 
-      var bloco1 =
-        '<div class="content-block content-block-matricula">' +
+      return '<div class="content-block content-block-matricula">' +
           '<div>' +
             '<p class="matricula-info-label">Matrículas fechadas</p>' +
             '<p class="matricula-info-datas">Abrem em 15/06 (segunda-feira)</p>' +
@@ -758,54 +785,62 @@ const secoes = {
           '<div class="block-title">Calendário do Intensivo</div>' +
           '<table class="datas-table">' + linhasCron + '</table>' +
         '</div>';
+    }
+  },
 
-      /* ── BLOCO 2: Turmas por idioma ── */
+  intensivo_turmas: {
+    title: 'Curso Intensivo de Julho',
+    sub: 'Turmas e horários · 2ª a 6ª feira · 13/07 – 07/08',
+    info: null,
+    html: function() {
       var idiomas = [
         { nome: 'Inglês',   cor: '#2563eb', bgCor: '#1d4ed8',
           niveis: [
-            { cod: 'A1.1', nome: 'Básico 1',        hs: [['09h – 12h','Remota'],['14h – 17h','Remota'],['19h – 22h','Remota']] },
-            { cod: 'A1.2', nome: 'Básico 2',         hs: [['14h – 17h','Remota'],['19h – 22h','Remota']] },
-            { cod: 'A2.1', nome: 'Intermediário 1',  hs: [['09h – 12h','Presencial'],['09h – 12h','Remota'],['09h – 12h','Remota']] },
-            { cod: 'A2.2', nome: 'Intermediário 2',  hs: [['18h – 21h','Presencial'],['19h – 22h','Remota']] },
-            { cod: 'B1.2', nome: 'Pós-Intermediário 2', hs: [['09h – 12h','Presencial']] }
+            { cod: 'A1.1', nome: 'Básico 1',             hs: [['09h – 12h','Remota'],['14h – 17h','Remota'],['19h – 22h','Remota']] },
+            { cod: 'A1.2', nome: 'Básico 2',              hs: [['14h – 17h','Remota'],['19h – 22h','Remota']] },
+            { cod: 'A2.1', nome: 'Intermediário 1',       hs: [['09h – 12h','Presencial'],['09h – 12h','Remota'],['09h – 12h','Remota']] },
+            { cod: 'A2.2', nome: 'Intermediário 2',       hs: [['18h – 21h','Presencial'],['19h – 22h','Remota']] },
+            { cod: 'B1.2', nome: 'Pós-Intermediário 2',  hs: [['09h – 12h','Presencial']] }
           ]
         },
         { nome: 'Francês',  cor: '#7c3aed', bgCor: '#6d28d9',
           niveis: [
-            { cod: 'A1.1', nome: 'Básico 1',         hs: [['09h – 12h','Presencial'],['19h – 22h','Remota']] },
-            { cod: 'A2.1', nome: 'Intermediário 1',  hs: [['09h – 12h','Remota'],['19h – 22h','Remota']] },
-            { cod: 'A2.2', nome: 'Intermediário 2',  hs: [['14h – 17h','Presencial']] },
-            { cod: 'B1.1', nome: 'Pós-Intermediário 1', hs: [['09h – 12h','Remota']] }
+            { cod: 'A1.1', nome: 'Básico 1',             hs: [['09h – 12h','Presencial'],['19h – 22h','Remota']] },
+            { cod: 'A2.1', nome: 'Intermediário 1',       hs: [['09h – 12h','Remota'],['19h – 22h','Remota']] },
+            { cod: 'A2.2', nome: 'Intermediário 2',       hs: [['14h – 17h','Presencial']] },
+            { cod: 'B1.1', nome: 'Pós-Intermediário 1',  hs: [['09h – 12h','Remota']] }
           ]
         },
         { nome: 'Espanhol', cor: '#dc2626', bgCor: '#b91c1c',
           niveis: [
-            { cod: 'A1.1', nome: 'Básico 1',         hs: [['09h – 12h','Remota']] },
-            { cod: 'A1.2', nome: 'Básico 2',          hs: [['09h – 12h','Remota'],['19h – 22h','Remota']] },
-            { cod: 'A2.1', nome: 'Intermediário 1',  hs: [['19h – 22h','Remota']] }
+            { cod: 'A1.1', nome: 'Básico 1',             hs: [['09h – 12h','Remota']] },
+            { cod: 'A1.2', nome: 'Básico 2',              hs: [['09h – 12h','Remota'],['19h – 22h','Remota']] },
+            { cod: 'A2.1', nome: 'Intermediário 1',       hs: [['19h – 22h','Remota']] }
           ]
         },
         { nome: 'Alemão',   cor: '#b45309', bgCor: '#92400e',
           niveis: [
-            { cod: 'A1.1', nome: 'Básico 1',         hs: [['09h – 12h','Remota']] },
-            { cod: 'A2.1', nome: 'Intermediário 1',  hs: [['19h – 21h','Remota']] }
+            { cod: 'A1.1', nome: 'Básico 1',             hs: [['09h – 12h','Remota']] },
+            { cod: 'A2.1', nome: 'Intermediário 1',       hs: [['19h – 21h','Remota']] }
           ]
         }
       ];
 
-      var bloco2Header =
-        '<div class="turmas-section-header">' +
-          '<span class="turmas-section-title">Turmas disponíveis</span>' +
-          '<span class="turmas-section-sub">2ª a 6ª feira</span>' +
-        '</div>';
-
       var turmasCards = idiomas.map(function(id) {
-        var niveisRows = id.niveis.map(function(n) {
-          var horariosRows = n.hs.map(function(h) {
-            var isP = h[1] === 'Presencial';
-            return '<div class="turma-row">' +
-              '<span class="turma-row-hora">' + h[0] + '</span>' +
-              '<span class="turma-row-mod ' + (isP ? 'mod-presencial' : 'mod-remota') + '">' + h[1] + '</span>' +
+        var niveisHtml = id.niveis.map(function(n) {
+          // Consolida horários duplicados: '09h – 12h|Remota' x2 vira 1 ticket com contagem
+          var agrupado = {};
+          n.hs.forEach(function(h) {
+            var chave = h[0] + '|' + h[1];
+            agrupado[chave] = (agrupado[chave] || 0) + 1;
+          });
+          var tickets = Object.keys(agrupado).map(function(chave) {
+            var partes = chave.split('|');
+            var hora = partes[0], mod = partes[1], qtd = agrupado[chave];
+            var isP = mod === 'Presencial';
+            return '<div class="turma-ticket ' + (isP ? 'ticket-presencial' : 'ticket-remota') + '">' +
+              '<span class="ticket-hora">' + hora + '</span>' +
+              '<span class="ticket-mod">' + mod + (qtd > 1 ? ' · ' + qtd + ' turmas' : '') + '</span>' +
             '</div>';
           }).join('');
           return '<div class="turma-nivel-card">' +
@@ -813,27 +848,31 @@ const secoes = {
               '<span class="turma-nivel-cod" style="background:' + id.cor + '18;color:' + id.cor + ';border:1px solid ' + id.cor + '44">' + n.cod + '</span>' +
               '<span class="turma-nivel-fullname">' + n.nome + '</span>' +
             '</div>' +
-            '<div class="turma-nivel-horarios">' + horariosRows + '</div>' +
+            '<div class="turma-tickets">' + tickets + '</div>' +
           '</div>';
         }).join('');
-
         return '<div class="turma-idioma-card">' +
           '<div class="turma-idioma-topo" style="border-left:4px solid ' + id.bgCor + '">' +
             '<span class="turma-idioma-nome" style="color:' + id.bgCor + '">' + id.nome + '</span>' +
           '</div>' +
-          '<div class="turma-idioma-niveis">' + niveisRows + '</div>' +
+          '<div class="turma-idioma-niveis">' + niveisHtml + '</div>' +
         '</div>';
       }).join('');
 
-      var bloco2 =
-        '<div class="content-block">' +
-          bloco2Header +
-          '<div class="turmas-idiomas-grid">' + turmasCards + '</div>' +
-        '</div>';
-
-      return bloco1 + bloco2;
+      return '<div class="content-block">' +
+        '<div class="turmas-section-header">' +
+          '<span class="turmas-section-title">Turmas disponíveis</span>' +
+          '<span class="turmas-section-sub">2ª a 6ª feira</span>' +
+        '</div>' +
+        '<div class="turmas-legenda">' +
+          '<span class="legenda-item"><span class="legenda-dot dot-presencial"></span>Presencial — aulas no CAC, Campus Recife</span>' +
+          '<span class="legenda-item"><span class="legenda-dot dot-remota"></span>Remota — aulas on-line ao vivo</span>' +
+        '</div>' +
+        '<div class="turmas-idiomas-grid">' + turmasCards + '</div>' +
+      '</div>';
     }
   },
+
 
   regular: {
     title: 'Curso Regular',
