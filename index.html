@@ -510,66 +510,90 @@
   }
   .ticket-remota .ticket-mod { color: #0369a1; }
 
-  /* ── CARDS DO INTENSIVO ── */
-  .sec-card-intensivo {
-    border: 2px solid #c8eebc;
-    background: #fafffe;
+  /* ── HERO INTENSIVO ── */
+  .hero-intensivo {
+    background: linear-gradient(160deg, #f2faec 0%, #e8f6df 100%);
+    border: 1.5px solid #d4edcc;
+    border-radius: 20px;
+    padding: 1.8rem 1.6rem 1.6rem;
+    margin-bottom: 1.8rem;
   }
-  .sec-card-intensivo:hover { border-color: #5aaa1e; }
-  .sec-card-intensivo:focus-visible { box-shadow: 0 0 0 3px rgba(90,170,30,.3); border-color: #5aaa1e; }
-  .sec-card-intensivo .sec-card-body {
-    justify-content: space-between;
+  .hero-eyebrow {
+    font-size: .68rem; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: #3d8a00;
+    margin-bottom: .4rem;
+  }
+  .hero-titulo {
+    font-size: 1.65rem; font-weight: 800; color: #1a1a1a;
+    line-height: 1.1; margin-bottom: .45rem;
+    letter-spacing: -.02em;
+  }
+  .hero-datas {
+    font-size: .87rem; color: #4a6840; margin-bottom: 1.3rem;
+  }
+  .hero-datas strong { color: #2d6600; font-weight: 800; }
+
+  .hero-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .9rem;
+  }
+  @media (max-width: 560px) { .hero-cards { grid-template-columns: 1fr; } }
+
+  .hero-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 1.1rem 1.15rem;
+    display: flex; align-items: center; gap: .9rem;
+    cursor: pointer;
+    border: 1.5px solid rgba(90,170,30,.12);
+    box-shadow: 0 1px 4px rgba(45,102,0,.06);
+    transition: box-shadow .2s, transform .18s, border-color .2s;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    min-height: 76px;
+  }
+  .hero-card:hover {
+    box-shadow: 0 8px 24px rgba(45,102,0,.13);
+    transform: translateY(-2px);
+    border-color: #5aaa1e;
+  }
+  .hero-card:active { transform: translateY(0); }
+  .hero-card:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(90,170,30,.35);
+    border-color: #5aaa1e;
   }
 
-  .intensivo-label {
-    font-size: .67rem; font-weight: 700; letter-spacing: .6px;
-    text-transform: uppercase; color: #3d8a00; margin-bottom: .35rem;
+  .hero-card-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: #5aaa1e; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
   }
-  .intensivo-titulo {
-    font-size: 1rem; font-weight: 800; color: #1a1a1a; margin-bottom: .7rem;
-    line-height: 1.2;
-  }
+  .hero-card-icon svg { pointer-events: none; }
 
-  /* Datas */
-  .intensivo-datas { display: flex; flex-direction: column; gap: .35rem; }
-  .intensivo-data-item { display: flex; flex-direction: column; gap: .05rem; }
-  .intensivo-data-label {
-    font-size: .63rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: .4px; color: #7ab85a;
+  .hero-card-info { flex: 1; min-width: 0; }
+  .hero-card-titulo {
+    font-size: .95rem; font-weight: 800; color: #1a1a1a;
+    line-height: 1.2; margin-bottom: .15rem;
   }
-  .intensivo-data-valor { font-size: .88rem; font-weight: 700; color: #1a1a1a; }
+  .hero-card-sub {
+    font-size: .74rem; color: #888; line-height: 1.4;
+  }
+  .hero-card-arrow {
+    color: #c4ddb4; font-size: 1.4rem; line-height: 1;
+    flex-shrink: 0;
+    transition: color .2s, transform .2s;
+  }
+  .hero-card:hover .hero-card-arrow { color: #5aaa1e; transform: translateX(3px); }
 
-  /* Idiomas */
-  .intensivo-idiomas {
-    display: flex; flex-wrap: wrap; gap: .3rem; margin-bottom: .5rem;
+  /* ── LABEL OUTRAS DATAS ── */
+  .outras-datas-label {
+    font-size: .7rem; font-weight: 700; letter-spacing: .8px;
+    text-transform: uppercase; color: #aaa;
+    margin-bottom: .8rem; padding-left: .2rem;
   }
-  .intensivo-idiomas span {
-    font-size: .7rem; font-weight: 600;
-    padding: .18rem .6rem; border-radius: 20px;
-    background: #edfbf0; color: #1a7a3a; border: 1px solid #c8eebc;
-  }
-
-  /* Preview de horários */
-  .intensivo-horarios-preview {
-    display: flex; flex-wrap: wrap; gap: .3rem;
-  }
-  .intensivo-horarios-preview span {
-    font-size: .72rem; font-weight: 700;
-    padding: .22rem .65rem; border-radius: 8px;
-    background: #fff; border: 1.5px solid #c8eebc; color: #2d6600;
-  }
-  .sec-card-intensivo:hover .intensivo-horarios-preview span {
-    border-color: #5aaa1e; background: #f0fdf0;
-  }
-
-  /* CTA */
-  .intensivo-cta {
-    font-size: .78rem; font-weight: 700; color: #5aaa1e;
-    margin-top: .85rem;
-    text-decoration: underline; text-underline-offset: 3px;
-    transition: color .2s;
-  }
-  .sec-card-intensivo:hover .intensivo-cta { color: #3d8a00; }
 
   /* ── ANIMAÇÃO ── */
   .fade { animation: fadeIn .22s ease both; }
@@ -596,52 +620,44 @@
       <p>Selecione uma seção para ver as datas</p>
     </div>
 
+    <!-- HERO: Intensivo Julho 2026 -->
+    <section class="hero-intensivo" aria-labelledby="hero-titulo">
+      <p class="hero-eyebrow">Próximo evento</p>
+      <h2 id="hero-titulo" class="hero-titulo">Intensivo Julho 2026</h2>
+      <p class="hero-datas">Aulas de 13/07 a 07/08 · Matrículas abrem em <strong>15/06</strong></p>
+
+      <div class="hero-cards">
+
+        <!-- Turmas e horários -->
+        <div class="hero-card" onclick="showDetail('intensivo_turmas')" role="button" tabindex="0" aria-label="Ver turmas e horários do Intensivo Julho 2026">
+          <div class="hero-card-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="hero-card-info">
+            <h3 class="hero-card-titulo">Turmas e horários</h3>
+            <p class="hero-card-sub">Inglês · Francês · Espanhol · Alemão</p>
+          </div>
+          <span class="hero-card-arrow" aria-hidden="true">›</span>
+        </div>
+
+        <!-- Calendário -->
+        <div class="hero-card" onclick="showDetail('intensivo_cal')" role="button" tabindex="0" aria-label="Ver calendário e datas do Intensivo Julho 2026">
+          <div class="hero-card-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div class="hero-card-info">
+            <h3 class="hero-card-titulo">Calendário e datas</h3>
+            <p class="hero-card-sub">Matrículas, início e fim das aulas</p>
+          </div>
+          <span class="hero-card-arrow" aria-hidden="true">›</span>
+        </div>
+
+      </div>
+    </section>
+
+    <p class="outras-datas-label">Outras datas do semestre</p>
+
     <div class="sec-grid">
-
-      <!-- Intensivo: Calendário -->
-      <div class="sec-card sec-card-intensivo" onclick="showDetail('intensivo_cal')" role="button" tabindex="0" aria-label="Ver calendário do Curso Intensivo de Julho">
-        <div class="sec-accent" style="background:#5aaa1e"></div>
-        <div class="sec-card-body">
-          <div>
-            <p class="intensivo-label">🔜 Intensivo de Julho</p>
-            <p class="intensivo-titulo">Calendário e datas</p>
-            <div class="intensivo-datas">
-              <div class="intensivo-data-item">
-                <span class="intensivo-data-label">Matrículas</span>
-                <span class="intensivo-data-valor">Abrem 15/06</span>
-              </div>
-              <div class="intensivo-data-item">
-                <span class="intensivo-data-label">Aulas</span>
-                <span class="intensivo-data-valor">13/07 – 07/08</span>
-              </div>
-            </div>
-          </div>
-          <p class="intensivo-cta">Ver datas completas →</p>
-        </div>
-      </div>
-
-      <!-- Intensivo: Turmas -->
-      <div class="sec-card sec-card-intensivo" onclick="showDetail('intensivo_turmas')" role="button" tabindex="0" aria-label="Ver turmas e horários do Curso Intensivo de Julho">
-        <div class="sec-accent" style="background:#5aaa1e"></div>
-        <div class="sec-card-body">
-          <div>
-            <p class="intensivo-label">🔜 Intensivo de Julho</p>
-            <p class="intensivo-titulo">Turmas e horários</p>
-            <div class="intensivo-idiomas">
-              <span>Alemão</span>
-              <span>Espanhol</span>
-              <span>Francês</span>
-              <span>Inglês</span>
-            </div>
-            <div class="intensivo-horarios-preview">
-              <span>09h – 12h</span>
-              <span>14h – 17h</span>
-              <span>18h – 22h</span>
-            </div>
-          </div>
-          <p class="intensivo-cta">Ver turmas e horários →</p>
-        </div>
-      </div>
 
       <!-- Nivelamento -->
       <div class="sec-card" onclick="showDetail('nivelamento')" role="button" tabindex="0" aria-label="Provas de Nivelamento">
@@ -960,7 +976,7 @@ const secoes = {
 };
 
 /* acessibilidade — teclado */
-document.querySelectorAll('.sec-card[role="button"]').forEach(card => {
+document.querySelectorAll('[role="button"][onclick]').forEach(card => {
   card.addEventListener('keydown', e => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
   });
